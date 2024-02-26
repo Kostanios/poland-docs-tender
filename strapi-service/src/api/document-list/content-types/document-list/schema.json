@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "document_lists",
+  "info": {
+    "singularName": "document-list",
+    "pluralName": "document-lists",
+    "displayName": "DocumentList",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "document_lists"
+    },
+    "document_names": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::document-name.document-name"
+    },
+    "document_file_lists": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::document-file-list.document-file-list",
+      "mappedBy": "document_list"
+    }
+  }
+}
