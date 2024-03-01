@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router';
 import HorizontalHeader from './horizontal-header/HorizontalHeader.vue';
 import Customizer from './customizer/Customizer.vue';
+import VerticalSidebarVue from './vertical-sidebar/VerticalSidebar.vue';
 import { useCustomizerStore } from '../../stores/customizer';
 import { SettingsIcon } from 'vue-tabler-icons';
 const customizer = useCustomizerStore();
@@ -24,6 +25,7 @@ const customizer = useCustomizerStore();
                 <Customizer />
             </v-navigation-drawer>
             <HorizontalHeader v-if="customizer.setHorizontalLayout" />
+            <VerticalSidebarVue v-if="!customizer.setHorizontalLayout" />
             <v-main>
                 <v-container fluid class="page-wrapper pb-sm-15 pb-10">
                     <div :class="customizer.boxed ? 'maxWidth' : ''">

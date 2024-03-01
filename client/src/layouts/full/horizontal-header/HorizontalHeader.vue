@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue';
 import { useCustomizerStore } from '../../../stores/customizer';
-import { useEcomStore } from '@/stores/apps/eCommerce';
 // dropdown imports
 import LanguageDD from '../vertical-header/LanguageDD.vue';
 import NotificationDD from '../vertical-header/NotificationDD.vue';
@@ -19,12 +18,6 @@ function searchbox() {
 watch(priority, (newPriority) => {
     // yes, console.log() is a side effect
     priority.value = newPriority;
-});
-
-// count items
-const store = useEcomStore();
-const getCart = computed(() => {
-    return store.cart;
 });
 
 </script>

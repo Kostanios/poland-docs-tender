@@ -5,7 +5,7 @@ export type ConfigProps = {
     setHorizontalLayout: boolean;
     setRTLLayout: boolean;
     actTheme: string;
-    inputBg:string;
+    inputBg: string;
     boxed: boolean;
     setBorderCard: boolean;
 };
@@ -14,7 +14,7 @@ const config: ConfigProps = {
     Sidebar_drawer: null,
     Customizer_drawer: false,
     mini_sidebar: false,
-    setHorizontalLayout: true, // Horizontal layout
+    setHorizontalLayout: false, // Horizontal layout
     setRTLLayout: false, // RTL layout
     actTheme: 'BLUE_THEME',
     inputBg: 'BLUE_THEME',

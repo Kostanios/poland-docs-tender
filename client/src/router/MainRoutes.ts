@@ -8,12 +8,12 @@ const MainRoutes = {
     children: [
         {
             path: '/',
-            redirect: "/dashboard",
+            redirect: '/dashboard',
         },
         {
             name: 'Analytical',
             path: '/dashboard',
-            component: () => import('@/views/dashboards/classic/Classic.vue'),
+            component: () => import('@/views/dashboards/type-documents/TypeDocuments.vue'),
         },
     ]
 };

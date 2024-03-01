@@ -14,7 +14,7 @@ const authStore = useAuthStore();
         <template v-slot:activator="{ props }">
             <v-btn class="custom-hover-primary" variant="text" v-bind="props" icon>
                 <v-avatar size="35">
-                    <img src="@/assets/images/profile/user2.jpg" width="35" alt="Julia" />
+                    <img width="35" alt="avatar" />
                 </v-avatar>
             </v-btn>
         </template>
@@ -23,7 +23,7 @@ const authStore = useAuthStore();
                 <h6 class="text-h5 font-weight-medium">User Profile</h6>
                 <div class="d-flex align-center mt-4 pb-6">
                     <v-avatar size="80">
-                        <img src="@/assets/images/profile/user2.jpg" width="80" />
+                        <img src="" width="80" />
                     </v-avatar>
                     <div class="ml-3">
                         <h6 class="text-h6 mb-n1">Julia Roberts</h6>

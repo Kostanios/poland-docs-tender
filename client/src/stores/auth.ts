@@ -14,6 +14,7 @@ export const useAuthStore = defineStore({
     }),
     actions: {
         async login(username: string, password: string) {
+            clearJWT();
             const { data: { user, jwt }} = await loginUser({ identifier: username, password });
 
             this.user = user;
@@ -24,6 +25,7 @@ export const useAuthStore = defineStore({
             router.push(this.returnUrl || '/dashboard');
         },
         async register(email: string, username: string, password: string) {
+            clearJWT();
             const { data: { user, jwt }} = await registerUser({ username, password, email });
 
             this.user = user;
