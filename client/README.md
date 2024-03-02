@@ -1,29 +1,19 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+Poland Docs client app is created to help accountant and clients to collect, share and edit their documents
 
-### How do I get set up? ###
+*** 
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+## How do I get set up?
+```Recommended NodeJS version 18.19.0```
 
-### Contribution guidelines ###
+### Dev Mode Steps
+1) install dependency ```npm ci```
+2) build & run ```npm run dev```
 
-* Writing tests
-* Code review
-* Other guidelines
+### Deployment instructions
+1) install dependency ```npm ci```
+2) build & run ```npm run build```, ```npm run preview```
 
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
