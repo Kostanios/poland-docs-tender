@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import Logo from '@/layouts/full/logo/LogoAuth.vue';
-/*form component*/
-import TwoStepForm from '@/components/auth/TwoStepForm.vue'
 </script>
 <template>
     <div class="authentication">
@@ -17,8 +15,7 @@ import TwoStepForm from '@/components/auth/TwoStepForm.vue'
                             <h6 class="text-subtitle-1 font-weight-medium mt-3 text-center">
                                 ******1234
                             </h6>
-                            <!---Form---->
-                            <TwoStepForm/>
+<!--                            <TwoStepForm/>-->
                         </v-card-item>
                     </v-card>
                 </v-col>

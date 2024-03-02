@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue';
 import { useCustomizerStore } from '../../../stores/customizer';
-import { useEcomStore } from '@/stores/apps/eCommerce';
 import { GridDotsIcon, LanguageIcon, SearchIcon, Menu2Icon, BellIcon, ShoppingCartIcon } from 'vue-tabler-icons';
 import LanguageDD from './LanguageDD.vue';
 import NotificationDD from './NotificationDD.vue';
@@ -22,9 +21,8 @@ watch(priority, (newPriority) => {
 });
 
 // count items
-const store = useEcomStore();
 const getCart = computed(() => {
-    return store.cart;
+    return [];
 });
 </script>
 
