@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-
-  const notifications = ref<{ avatar: string }[]>([])
+  const notifications = ref<{ avatar: string, title: string, subtitle: [] }[]>([])
 </script>
 <template>
     <!-- ---------------------------------------------- -->
