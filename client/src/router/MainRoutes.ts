@@ -8,12 +8,17 @@ const MainRoutes = {
     children: [
         {
             path: '/',
-            redirect: '/dashboard',
+            redirect: '/type-document',
         },
         {
-            name: 'Analytical',
-            path: '/dashboard',
+            name: 'TypeDocument',
+            path: '/type-document',
             component: () => import('@/views/dashboards/type-documents/TypeDocuments.vue'),
+        },
+        {
+            name: 'TypeDocumentEdit',
+            path: '/type-document/:id',
+            component: () => import('@/views/dashboards/type-documents/TypeDocumentsEdit.vue'),
         },
     ]
 };

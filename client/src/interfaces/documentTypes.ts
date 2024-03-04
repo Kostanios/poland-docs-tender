@@ -1,8 +1,13 @@
 export interface GetTypeDocumentsPagination {
     page: number
-    pageSize: number
+    itemsPerPage: number
+    sortBy: string
 }
 
+
 export interface GetTypeDocumentsParams {
-    pagination: GetTypeDocumentsPagination
+    pagination: {
+        page: number,
+        pageSize: number
+    }
 }

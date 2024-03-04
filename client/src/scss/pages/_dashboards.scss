@@ -30,6 +30,11 @@
     }
 }
 
+.document-type-table tr td {
+    max-width: 500px;
+    text-wrap: pretty !important;
+}
+
 .recent-transaction {
     .line {
         width: 2px;

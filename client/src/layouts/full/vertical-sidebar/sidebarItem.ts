@@ -79,7 +79,7 @@ const sidebarItem: menu[] = [
   {
     title: "Type Documents",
     icon: FilesIcon,
-    to: "/dashboard",
+    to: "/type-document",
   },
   {
     title: 'Error',

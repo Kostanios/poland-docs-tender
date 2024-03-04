@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 import BaseBreadcrumb from "@/components/shared/BaseBreadcrumb.vue";
-import { useTypeDocumentsStore } from '@/stores/typeDocuments';
-import CrudTable from '@/views/dashboards/type-documents/CrudTable.vue';
+import TypeDocumentsTable from '@/views/dashboards/type-documents/TypeDocumentsTable.vue';
 
-const page = ref({ title: "Classic" });
 const breadcrumbs = ref([
     {
         text: "Главная",
@@ -13,19 +11,15 @@ const breadcrumbs = ref([
         href: "#",
     },
     {
-        text: "Наименования Документов",
+        text: "Список Типовых Документов",
         disabled: true,
-        href: "#",
+        href: "/type-document",
     },
 ]);
-
-onMounted(() => {
-    useTypeDocumentsStore().getTypeDocumentsPage({ page: 0 })
-})
 
 </script>
 
 <template>
-    <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-    <CrudTable/>
+    <BaseBreadcrumb :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+    <TypeDocumentsTable/>
 </template>

@@ -22,7 +22,7 @@ export const useAuthStore = defineStore({
             localStorage.setItem('token', jwt);
             setJWT(jwt);
 
-            router.push(this.returnUrl || '/dashboard');
+            router.push(this.returnUrl || '/');
         },
         async register(email: string, username: string, password: string) {
             clearJWT();
@@ -33,7 +33,7 @@ export const useAuthStore = defineStore({
             localStorage.setItem('token', jwt);
             setJWT(jwt);
 
-            router.push(this.returnUrl || '/dashboard');
+            router.push(this.returnUrl || '/');
         },
         logout() {
             this.user = null;
