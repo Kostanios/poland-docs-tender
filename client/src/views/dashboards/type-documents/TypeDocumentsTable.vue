@@ -1,12 +1,13 @@
 <script setup>
 import { storeToRefs } from "pinia";
-import { computed, nextTick, ref, watch } from 'vue';
+import { nextTick, ref, watch } from 'vue';
 import UiParentCard from '@/components/shared/UiParentCard.vue';
 import { useTypeDocumentsStore } from '@/stores/typeDocuments';
 import { router } from '@/router';
 
 const typeModelStore = useTypeDocumentsStore();
 const getTypeDocumentsPage = typeModelStore.getTypeDocumentsPage;
+const deleteTypeDocument = typeModelStore.deleteTypeDocument;
 const {
     typeDocuments,
     total,
@@ -16,19 +17,19 @@ const dialog = ref(false)
 const dialogDelete = ref(false)
 const headers = ref([
     {
-        title: 'Document Name',
+        title: 'Название Документа',
         align: 'start',
         sortable: true,
         key: 'modelName'
     },
     {
-        title: 'Description',
+        title: 'Описание',
         align: 'start',
         sortable: false,
         key: 'description'
     },
     {
-        title: 'Actions',
+        title: 'Действия',
         key: 'actions',
         sortable: false,
         align: 'end'
@@ -49,9 +50,6 @@ const defaultItem = ref({
     carbs: 0,
     protein: 0,
 })
-const formTitle = computed(() => {
-    return editedIndex.value === -1 ? 'New Item' : 'Edit Item'
-})
 
 function deleteItem(item) {
     editedIndex.value = typeDocuments.value.indexOf(item)
@@ -59,6 +57,7 @@ function deleteItem(item) {
     dialogDelete.value = true
 }
 function deleteItemConfirm() {
+    deleteTypeDocument(typeDocuments.value[editedIndex.value].id)
     typeDocuments.value.splice(editedIndex.value, 1)
     closeDelete()
 }
@@ -89,10 +88,14 @@ function redirectToDocumentsEditPage (item) {
     router.push(`/type-document/${item.id}`);
 }
 
+function redirectToDocumentsCreatePage () {
+    router.push(`/type-document-create`);
+}
+
 </script>
 
 <template>
-    <UiParentCard title="Наименования Документов">
+    <UiParentCard title="Типовые Документы">
         <v-data-table-server
             class="border rounded-md document-type-table"
             :headers="headers"
@@ -105,16 +108,16 @@ function redirectToDocumentsEditPage (item) {
             <template v-slot:top>
                 <v-toolbar class="bg-lightsecondary" flat>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary"  variant="flat" dark >Add New Item</v-btn>
+                    <v-btn @click="redirectToDocumentsCreatePage" color="primary"  variant="flat" dark >Добавить Типовой Документ</v-btn>
                     <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
-                            <v-card-title class="text-h5 text-center py-6">Are you sure you want to delete this item?</v-card-title>
+                            <v-card-title class="text-h5 text-center py-6">Вы уверены что хотите удалить документ?</v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="error" variant="flat" dark   @click="closeDelete">Cancel</v-btn>
-                                <v-btn color="success" variant="flat" dark   @click="deleteItemConfirm">OK</v-btn>
+                                <v-btn color="error" variant="flat" dark @click="closeDelete">отмена</v-btn>
+                                <v-btn color="success" variant="flat" dark @click="deleteItemConfirm">ок</v-btn>
                                 <v-spacer></v-spacer>
-                            </v-card-actions>plo
+                            </v-card-actions>
                         </v-card>
                     </v-dialog>
                 </v-toolbar>
@@ -127,11 +130,6 @@ function redirectToDocumentsEditPage (item) {
                     mdi-delete
                 </v-icon>
             </template>
-<!--            <template v-slot:no-data>-->
-<!--                <v-btn color="primary" @click="initialize">-->
-<!--                    Reset-->
-<!--                </v-btn>-->
-<!--            </template>-->
         </v-data-table-server>
     </UiParentCard>
 </template>

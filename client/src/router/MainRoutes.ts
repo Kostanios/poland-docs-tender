@@ -11,6 +11,11 @@ const MainRoutes = {
             redirect: '/type-document',
         },
         {
+            name: 'TypeDocumentCreate',
+            path: '/type-document-create',
+            component: () => import('@/views/dashboards/type-documents/TypeDocumentsCreate.vue'),
+        },
+        {
             name: 'TypeDocument',
             path: '/type-document',
             component: () => import('@/views/dashboards/type-documents/TypeDocuments.vue'),

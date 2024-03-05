@@ -1,38 +1,61 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-const select = ref('select');
-const items = ref(['One', 'Two', 'Three', 'Four']);
-const defaultcheckbox1 = ref(false);
-const defaultcheckbox2 = ref(false);
-const defaultcheckbox3 = ref(false);
-const defaultcheckbox4 = ref(false);
-const defaultcheckbox5 = ref(false);
-const defaultcheckbox6 = ref(false);
+import { onMounted, ref } from 'vue';
+import { useTypeDocumentsStore } from '@/stores/typeDocuments';
+import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import debounce from '@/utils/debounce';
+
+const route = useRoute();
+const id = route.params.id;
+const store = useTypeDocumentsStore();
+const { typeDocumentDetails } = storeToRefs(store);
+const modelName = ref<string | null>(null);
+const description = ref<string | null>(null);
+
+const getTypeDocument = store.getTypeDocument;
+const updateTypeDocument = debounce(store.updateTypeDocument, 300);
+
+onMounted(() => typeof id === 'string' && getTypeDocument(id)
+    .then(typeDocumentDetails => {
+        modelName.value = typeDocumentDetails?.modelName || null
+        description.value = typeDocumentDetails?.description || null
+    })
+);
+
+function onModelNameChange (e: Event) {
+    if (typeof id === 'string' && typeDocumentDetails.value) {
+        const { createdAt, description, publishedAt, updatedAt } = typeDocumentDetails.value;
+        updateTypeDocument(id, {
+            createdAt,
+            description,
+            publishedAt,
+            updatedAt,
+            modelName: (e.target as HTMLInputElement).value || typeDocumentDetails.value.modelName
+        })
+    }
+}
+
+function onDescriptionChange (e: Event) {
+    if (typeof id === 'string' && typeDocumentDetails.value) {
+        const { createdAt, publishedAt, updatedAt, modelName } = typeDocumentDetails.value;
+        updateTypeDocument(id, {
+            createdAt,
+            description: (e.target as HTMLInputElement).value || typeDocumentDetails.value.description,
+            publishedAt,
+            updatedAt,
+            modelName,
+        })
+    }
+}
 
 </script>
 <template>
     <v-row>
         <v-col cols="12" lg="12">
-            <v-label class="mb-2 font-weight-medium">Default Text</v-label>
-            <v-text-field variant="outlined" color="primary" model-value="George deo"></v-text-field>
-            <v-label class="mb-2 font-weight-medium">Email</v-label>
-            <v-text-field variant="outlined" color="primary"></v-text-field>
-            <v-label class="mb-2 font-weight-medium">Password</v-label>
-            <v-text-field variant="outlined" type="password" color="primary"></v-text-field>
-            <v-label class="mb-2 font-weight-medium">Read Only</v-label>
-            <v-text-field variant="outlined" color="primary" model-value="Hello World" readonly hide-details></v-text-field>
-            <v-label class="mb-2 font-weight-medium">Select</v-label>
-            <v-select
-                v-model="select"
-                :items="items"
-                item-title="state"
-                item-value="abbr"
-                label="Select"
-                return-object
-                single-line
-                variant="outlined"
-            ></v-select>
-            <v-btn color="primary" flat>Submit</v-btn>
+            <v-label class="mb-2 font-weight-medium">Название Типового Документа</v-label>
+            <v-text-field @input="onModelNameChange" variant="outlined" color="primary" v-model="modelName"/>
+            <v-label class="mb-2 font-weight-medium">Описание</v-label>
+            <v-textarea @input="onDescriptionChange" variant="outlined" color="primary" v-model="description"/>
         </v-col>
     </v-row>
 </template>

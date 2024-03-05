@@ -5,6 +5,11 @@ export interface StrapiContentListDTO<T> {
     }
 }
 
+export interface StrapiContentDTO<T> {
+    data: T
+    meta: {}
+}
+
 export interface StrapiContentPagination {
     page: number
     pageCount: number

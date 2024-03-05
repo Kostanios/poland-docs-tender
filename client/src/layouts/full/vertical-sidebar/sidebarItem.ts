@@ -77,7 +77,7 @@ export interface menu {
 const sidebarItem: menu[] = [
   { header: 'Home' },
   {
-    title: "Type Documents",
+    title: "Типовые Документы",
     icon: FilesIcon,
     to: "/type-document",
   },
