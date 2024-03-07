@@ -82,6 +82,7 @@ function submitForm () {
                 color="primary"
                 v-model="description"
             />
+            <v-label class="mb-2 font-weight-medium">Связанные Наименования Документов</v-label>
             <v-autocomplete
                 multiple
                 chips

@@ -40,7 +40,7 @@ export const useTypeDocumentsStore = defineStore({
         loading: false
     }),
     actions: {
-        async createTypeDocument (data: TypicalDocument) {
+        async createTypeDocument (data: TypicalDocument & { document_names: { set: number [] }}) {
             try {
                 this.loading = true;
 

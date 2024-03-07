@@ -1,25 +1,52 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useTypeDocumentsStore } from '@/stores/typeDocuments';
+import type { DocumentNameEntity } from '@/types/dto/documentName';
+import { useDocumentNameStore } from '@/stores/documentName';
 
+const documentNameStore = useDocumentNameStore();
 const store = useTypeDocumentsStore();
 const name = ref<string | null>(null);
 const description = ref<string | null>(null);
+const documentNames = ref<DocumentNameEntity[]>([]);
+const documentNamesLabels = ref<Object[]>([]);
+const selectValue = ref<string[] | null>(null);
 
 const createTypeDocument = store.createTypeDocument;
+const getDocumentNamesPage = documentNameStore.getDocumentNamesPage;
 
 function createTypeDocumentHandler () {
-    if (name.value) {
+    const documentNamesIdsToSet = selectValue.value?.map(documentName =>
+        documentNames.value
+            .find(documentNameObj => documentNameObj.name === documentName)?.id || 0
+    );
+
+    if (name.value && documentNamesIdsToSet) {
         const now = new Date().toISOString();
+
         createTypeDocument({
             createdAt: now,
             updatedAt: now,
             publishedAt: now,
             name: name.value,
-            description: description.value
+            description: description.value,
+            document_names: {
+                set: documentNamesIdsToSet
+            }
         })
     }
 }
+
+onMounted(() => {
+    getDocumentNamesPage({ populate: 'typical_document' })
+        .then((data) => {
+            documentNames.value = data;
+            documentNamesLabels.value = data.map(documentName => ({
+                ...documentName,
+                title: documentName.name
+            }));
+        });
+});
 
 </script>
 <template>
@@ -42,6 +69,16 @@ function createTypeDocumentHandler () {
                 variant="outlined"
                 color="primary"
                 v-model="description"
+            />
+            <v-label class="mb-2 font-weight-medium">Связанные Наименования Документов</v-label>
+            <v-autocomplete
+                multiple
+                chips
+                v-model="selectValue"
+                :items="documentNamesLabels"
+                color="primary"
+                variant="outlined"
+                hide-details
             />
         </v-col>
         <v-btn @click="createTypeDocumentHandler" color="primary" variant="flat" dark>
