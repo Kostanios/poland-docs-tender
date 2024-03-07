@@ -44,14 +44,14 @@ function validate(values: any, { setErrors }: any) {
 <!--        </div>  -->
 <!--    </div>-->
     <Form @submit="validate" v-slot="{ errors, isSubmitting }" class="mt-5">
-        <v-label class="text-subtitle-1 font-weight-medium pb-2 text-lightText">Username</v-label>
+        <v-label class="text-subtitle-1 font-weight-medium pb-2 text-lightText">Имя или e-mail</v-label>
         <VTextField
             v-model="username"
             class="mb-8"
             required
             hide-details="auto"
         ></VTextField>
-        <v-label class="text-subtitle-1 font-weight-medium pb-2 text-lightText">Password</v-label>
+        <v-label class="text-subtitle-1 font-weight-medium pb-2 text-lightText">пароль</v-label>
         <VTextField
             v-model="password"
             :rules="passwordRules"
@@ -62,10 +62,10 @@ function validate(values: any, { setErrors }: any) {
         ></VTextField>
         <div class="d-flex flex-wrap align-center my-3 ml-n2">
             <v-checkbox v-model="checkbox" :rules="[(v:any) => !!v || 'You must agree to continue!']" required hide-details color="primary">
-                <template v-slot:label class="">Remeber this Device</template>
+                <template v-slot:label class="">Запомнить устройтво</template>
             </v-checkbox>
         </div>
-        <v-btn size="large" :loading="isSubmitting" color="primary" :disabled="valid" block type="submit" flat>Sign In</v-btn>
+        <v-btn size="large" :loading="isSubmitting" color="primary" :disabled="valid" block type="submit" flat>Войти</v-btn>
         <div v-if="errors.apiError" class="mt-2">
             <v-alert color="error">{{ errors.apiError }}</v-alert>
         </div>

@@ -1,22 +1,20 @@
-import { extend } from 'lodash';
-
-export type DocumentModel = {
+export type TypicalDocument = {
     createdAt: string
     description: string | null
-    modelName: string
+    name: string
     publishedAt: string
     updatedAt: string
 }
 
-export type DocumentModelDTO = {
-    attributes: DocumentModel,
+export type TypicalDocumentDTO = {
+    attributes: TypicalDocument,
     id: number
 }
 
-export type DocumentModelEntity = {
+export type TypicalDocumentEntity = {
     createdAt: string
     description: string | null
-    modelName: string
+    name: string
     publishedAt: string
     updatedAt: string
     id: number

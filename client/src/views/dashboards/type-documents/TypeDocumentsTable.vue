@@ -20,7 +20,7 @@ const headers = ref([
         title: 'Название Документа',
         align: 'start',
         sortable: true,
-        key: 'modelName'
+        key: 'name'
     },
     {
         title: 'Описание',

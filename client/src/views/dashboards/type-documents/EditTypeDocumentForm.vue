@@ -4,58 +4,95 @@ import { useTypeDocumentsStore } from '@/stores/typeDocuments';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import debounce from '@/utils/debounce';
+import { useDocumentNameStore } from '@/stores/documentName';
+import { router } from '@/router';
+import type { DocumentNameEntity } from '@/types/dto/documentName';
 
 const route = useRoute();
 const id = route.params.id;
-const store = useTypeDocumentsStore();
-const { typeDocumentDetails } = storeToRefs(store);
-const modelName = ref<string | null>(null);
+const typeDocumentsStore = useTypeDocumentsStore();
+const documentNameStore = useDocumentNameStore();
+const { typeDocumentDetails } = storeToRefs(typeDocumentsStore);
+
+const documentNames = ref<DocumentNameEntity[]>([]);
+const documentNamesLabels = ref<Object[]>([]);
+const name = ref<string | null>(null);
 const description = ref<string | null>(null);
+const selectValue = ref<string[] | null>(null);
 
-const getTypeDocument = store.getTypeDocument;
-const updateTypeDocument = debounce(store.updateTypeDocument, 300);
+const getTypeDocument = typeDocumentsStore.getTypeDocument;
+const getDocumentNamesPage = documentNameStore.getDocumentNamesPage;
+const updateTypeDocument = debounce(typeDocumentsStore.updateTypeDocument, 300);
 
-onMounted(() => typeof id === 'string' && getTypeDocument(id)
-    .then(typeDocumentDetails => {
-        modelName.value = typeDocumentDetails?.modelName || null
-        description.value = typeDocumentDetails?.description || null
-    })
-);
+onMounted(() => {
+    if (typeof id === 'string') {
+        getTypeDocument(id)
+            .then(typeDocumentDetails => {
+                name.value = typeDocumentDetails?.name || null;
+                description.value = typeDocumentDetails?.description || null;
+            });
 
-function onModelNameChange (e: Event) {
-    if (typeof id === 'string' && typeDocumentDetails.value) {
-        const { createdAt, description, publishedAt, updatedAt } = typeDocumentDetails.value;
-        updateTypeDocument(id, {
-            createdAt,
-            description,
-            publishedAt,
-            updatedAt,
-            modelName: (e.target as HTMLInputElement).value || typeDocumentDetails.value.modelName
-        })
+        getDocumentNamesPage({ populate: 'typical_document' })
+            .then((data) => {
+                documentNames.value = data;
+                documentNamesLabels.value = data.map(documentName => ({
+                    ...documentName,
+                    title: documentName.name
+                }));
+                selectValue.value = data.filter(documentName => documentName?.typical_document?.data?.id === Number(id)).map(documentName => documentName.name);
+            });
     }
-}
 
-function onDescriptionChange (e: Event) {
+
+});
+
+function submitForm () {
     if (typeof id === 'string' && typeDocumentDetails.value) {
-        const { createdAt, publishedAt, updatedAt, modelName } = typeDocumentDetails.value;
+        const { createdAt, publishedAt, updatedAt } = typeDocumentDetails.value;
+        const documentNamesIdsToSet = selectValue.value?.map(documentName =>
+            documentNames.value
+                .find(documentNameObj => documentNameObj.name === documentName)?.id
+        );
         updateTypeDocument(id, {
             createdAt,
-            description: (e.target as HTMLInputElement).value || typeDocumentDetails.value.description,
             publishedAt,
             updatedAt,
-            modelName,
-        })
+            description: description.value,
+            name: name.value,
+            document_names: {
+                set: documentNamesIdsToSet
+            }
+        }, router.back)
     }
 }
 
 </script>
 <template>
-    <v-row>
+    <v-row class="edit-type-form">
         <v-col cols="12" lg="12">
             <v-label class="mb-2 font-weight-medium">Название Типового Документа</v-label>
-            <v-text-field @input="onModelNameChange" variant="outlined" color="primary" v-model="modelName"/>
+            <v-text-field
+                variant="outlined"
+                color="primary"
+                v-model="name"
+            />
             <v-label class="mb-2 font-weight-medium">Описание</v-label>
-            <v-textarea @input="onDescriptionChange" variant="outlined" color="primary" v-model="description"/>
+            <v-textarea
+                variant="outlined"
+                color="primary"
+                v-model="description"
+            />
+            <v-autocomplete
+                multiple
+                chips
+                v-model="selectValue"
+                :items="documentNamesLabels"
+                color="primary"
+                variant="outlined"
+                hide-details
+            />
         </v-col>
+        <v-btn @click="submitForm" color="success" variant="flat" dark>Сохранить</v-btn>
+        <v-btn @click="router.back" color="error" variant="flat" dark>Отмена</v-btn>
     </v-row>
 </template>

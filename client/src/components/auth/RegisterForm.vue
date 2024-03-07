@@ -47,11 +47,11 @@ function validate(values: any, { setErrors }: any) {
 <!--        </div> -->
 <!--    </div>-->
     <Form @submit="validate" v-slot="{ errors, isSubmitting }" class="mt-5">
-        <v-label class="text-subtitle-1 font-weight-medium pb-2">Name</v-label>
+        <v-label class="text-subtitle-1 font-weight-medium pb-2">Имя</v-label>
         <VTextField v-model="fname" :rules="fnameRules" required ></VTextField>
-        <v-label class="text-subtitle-1 font-weight-medium pb-2">Email Adddress</v-label>
+        <v-label class="text-subtitle-1 font-weight-medium pb-2">e-mail</v-label>
         <VTextField v-model="email" :rules="emailRules" required ></VTextField>
-        <v-label class="text-subtitle-1 font-weight-medium pb-2">Password</v-label>
+        <v-label class="text-subtitle-1 font-weight-medium pb-2">пароль</v-label>
         <VTextField
             v-model="password"
             :rules="passwordRules"
@@ -60,7 +60,7 @@ function validate(values: any, { setErrors }: any) {
             type="password"
             color="primary"
         ></VTextField>
-        <v-btn :loading="isSubmitting" size="large" class="mt-2" color="primary" block type="submit" flat>Sign Up</v-btn>
+        <v-btn :loading="isSubmitting" size="large" class="mt-2" color="primary" block type="submit" flat>Зарегистрироваться</v-btn>
         <div v-if="errors.apiError" class="mt-2">
             <v-alert color="error">{{ errors.apiError }}</v-alert>
         </div>

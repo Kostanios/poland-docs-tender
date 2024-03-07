@@ -4,7 +4,8 @@
   "info": {
     "singularName": "document-name",
     "pluralName": "document-names",
-    "displayName": "documentName"
+    "displayName": "documentName",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -30,11 +31,11 @@
       "type": "integer",
       "default": 1
     },
-    "document_file_list": {
+    "typical_document": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::document-file-list.document-file-list",
-      "mappedBy": "document_name"
+      "relation": "manyToOne",
+      "target": "api::typical-document.typical-document",
+      "inversedBy": "document_names"
     }
   }
 }

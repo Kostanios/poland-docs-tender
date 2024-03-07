@@ -3,19 +3,19 @@ import { ref } from 'vue';
 import { useTypeDocumentsStore } from '@/stores/typeDocuments';
 
 const store = useTypeDocumentsStore();
-const modelName = ref<string | null>(null);
+const name = ref<string | null>(null);
 const description = ref<string | null>(null);
 
-const getTypeDocument = store.createTypeDocument;
+const createTypeDocument = store.createTypeDocument;
 
-function createTypeDocument () {
-    if (modelName.value) {
+function createTypeDocumentHandler () {
+    if (name.value) {
         const now = new Date().toISOString();
-        getTypeDocument({
+        createTypeDocument({
             createdAt: now,
             updatedAt: now,
             publishedAt: now,
-            modelName: modelName.value,
+            name: name.value,
             description: description.value
         })
     }
@@ -34,7 +34,7 @@ function createTypeDocument () {
                 placeholder="название типового документа"
                 variant="outlined"
                 color="primary"
-                v-model="modelName"
+                v-model="name"
             />
             <v-label class="mb-2 font-weight-medium">Описание</v-label>
             <v-textarea
@@ -44,6 +44,8 @@ function createTypeDocument () {
                 v-model="description"
             />
         </v-col>
-        <v-btn @click="createTypeDocument" color="primary"  variant="flat" dark >Добавить Типовой Документ</v-btn>
+        <v-btn @click="createTypeDocumentHandler" color="primary" variant="flat" dark>
+            Добавить Типовой Документ
+        </v-btn>
     </v-row>
 </template>

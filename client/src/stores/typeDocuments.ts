@@ -1,17 +1,18 @@
 import { defineStore } from 'pinia';
 import {
-    createTypeDocument, deleteTypeDocument,
+    createTypeDocument,
+    deleteTypeDocument,
     getTypeDocument,
     getTypeDocumentsPage,
     updateTypeDocument
 } from '@/services/typeDocumentsService';
-import type { GetTypeDocumentsPagination } from '@/interfaces/documentTypes';
-import type { DocumentModel, DocumentModelEntity } from '@/types/dto/documentModel';
+import type { GetTablePaginationParams } from '@/interfaces/documentTypes';
+import type { TypicalDocument, TypicalDocumentEntity } from '@/types/dto/typicalDocument';
 import { router } from '@/router';
 
 interface TypeDocumentsStore {
-    typeDocuments: DocumentModelEntity[],
-    typeDocumentDetails: DocumentModelEntity | null,
+    typeDocuments: TypicalDocumentEntity[],
+    typeDocumentDetails: TypicalDocumentEntity | null,
     total: number,
     params: {
         pagination: {
@@ -39,7 +40,7 @@ export const useTypeDocumentsStore = defineStore({
         loading: false
     }),
     actions: {
-        async createTypeDocument (data: DocumentModel) {
+        async createTypeDocument (data: TypicalDocument) {
             try {
                 this.loading = true;
 
@@ -73,7 +74,7 @@ export const useTypeDocumentsStore = defineStore({
                 return this.typeDocumentDetails;
             }
         },
-        async updateTypeDocument (id: string, data: DocumentModel) {
+        async updateTypeDocument (id: string, data: Partial<TypicalDocument & { document_names: { set: number [] }}>, onSuccess?: () => void) {
             try {
                 this.loading = true;
 
@@ -83,6 +84,9 @@ export const useTypeDocumentsStore = defineStore({
 
                 this.typeDocumentDetails = { ...res.data.data.attributes, id: res.data.data.id }
 
+                if (onSuccess) {
+                    onSuccess();
+                }
                 return this.typeDocumentDetails;
             } catch (e) {
                 console.error(e);
@@ -102,7 +106,7 @@ export const useTypeDocumentsStore = defineStore({
                 this.loading = false;
             }
         },
-        async getTypeDocumentsPage (pagination: GetTypeDocumentsPagination | undefined) {
+        async getTypeDocumentsPage (pagination: GetTablePaginationParams | undefined) {
             try {
                 this.loading = true;
 

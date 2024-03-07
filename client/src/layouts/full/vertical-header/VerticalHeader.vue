@@ -54,12 +54,6 @@ const getCart = computed(() => {
             <Menu2Icon size="25" />
         </v-btn>
 
-        <!-- ---------------------------------------------- -->
-        <!-- Search part -->
-        <!-- ---------------------------------------------- -->
-
-        <Searchbar />
-
 
         <!---/Search part -->
 
@@ -71,17 +65,7 @@ const getCart = computed(() => {
         <!-- translate -->
         <!-- ---------------------------------------------- -->
 
-        <LanguageDD />
-
-        <!-- ---------------------------------------------- -->
-        <!-- ShoppingCart -->
-        <!-- ---------------------------------------------- -->
-        <v-btn icon variant="text" color="primary" to="/ecommerce/checkout">
-            <v-badge color="error" :content="getCart?.length">
-                <!-- <ShoppingCartIcon stroke-width="1.5" size="22" /> -->
-                <v-icon size="22">mdi-cart</v-icon>
-            </v-badge>
-        </v-btn>
+<!--        <LanguageDD />-->
 
 
         <!-- ---------------------------------------------- -->

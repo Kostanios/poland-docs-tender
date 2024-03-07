@@ -16,3 +16,10 @@ export interface StrapiContentPagination {
     pageSize: number
     total: number
 }
+
+export interface GetStrapiPaginationParams {
+    pagination: {
+        page: number,
+        pageSize: number
+    }
+}

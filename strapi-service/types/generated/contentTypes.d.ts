@@ -810,11 +810,6 @@ export interface ApiDocumentFileListDocumentFileList
       'manyToOne',
       'api::document-list.document-list'
     >;
-    document_name: Attribute.Relation<
-      'api::document-file-list.document-file-list',
-      'oneToOne',
-      'api::document-name.document-name'
-    >;
     uploadedAt: Attribute.DateTime;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -885,6 +880,7 @@ export interface ApiDocumentNameDocumentName extends Schema.CollectionType {
     singularName: 'document-name';
     pluralName: 'document-names';
     displayName: 'documentName';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -895,10 +891,10 @@ export interface ApiDocumentNameDocumentName extends Schema.CollectionType {
     inputType: Attribute.Enumeration<['multiple', 'single']> &
       Attribute.DefaultTo<'single'>;
     order: Attribute.Integer & Attribute.DefaultTo<1>;
-    document_file_list: Attribute.Relation<
+    typical_document: Attribute.Relation<
       'api::document-name.document-name',
-      'oneToOne',
-      'api::document-file-list.document-file-list'
+      'manyToOne',
+      'api::typical-document.typical-document'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -918,21 +914,23 @@ export interface ApiDocumentNameDocumentName extends Schema.CollectionType {
   };
 }
 
-export interface ApiModelDocumentModelDocument extends Schema.CollectionType {
-  collectionName: 'model_documents';
+export interface ApiTypicalDocumentTypicalDocument
+  extends Schema.CollectionType {
+  collectionName: 'typical_documents';
   info: {
-    singularName: 'model-document';
-    pluralName: 'model-documents';
-    displayName: 'modelDocument';
+    singularName: 'typical-document';
+    pluralName: 'typical-documents';
+    displayName: 'typicalDocument';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    modelName: Attribute.String & Attribute.Required;
+    name: Attribute.String;
     description: Attribute.Text;
     document_names: Attribute.Relation<
-      'api::model-document.model-document',
+      'api::typical-document.typical-document',
       'oneToMany',
       'api::document-name.document-name'
     >;
@@ -940,13 +938,13 @@ export interface ApiModelDocumentModelDocument extends Schema.CollectionType {
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::model-document.model-document',
+      'api::typical-document.typical-document',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::model-document.model-document',
+      'api::typical-document.typical-document',
       'oneToOne',
       'admin::user'
     > &
@@ -975,7 +973,7 @@ declare module '@strapi/types' {
       'api::document-file-list.document-file-list': ApiDocumentFileListDocumentFileList;
       'api::document-list.document-list': ApiDocumentListDocumentList;
       'api::document-name.document-name': ApiDocumentNameDocumentName;
-      'api::model-document.model-document': ApiModelDocumentModelDocument;
+      'api::typical-document.typical-document': ApiTypicalDocumentTypicalDocument;
     }
   }
 }

@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onUnmounted, ref } from 'vue';
 
 import BaseBreadcrumb from "@/components/shared/BaseBreadcrumb.vue";
 import TypeDocumentsTable from '@/views/dashboards/type-documents/TypeDocumentsTable.vue';
+import { useTypeDocumentsStore } from '@/stores/typeDocuments';
+
+const store = useTypeDocumentsStore();
 
 const breadcrumbs = ref([
     {
@@ -17,6 +20,7 @@ const breadcrumbs = ref([
     },
 ]);
 
+onUnmounted(() => store.$reset());
 </script>
 
 <template>
