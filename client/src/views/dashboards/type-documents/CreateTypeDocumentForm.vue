@@ -21,7 +21,7 @@ function createTypeDocumentHandler () {
             .find(documentNameObj => documentNameObj.name === documentName)?.id || 0
     );
 
-    if (name.value && documentNamesIdsToSet) {
+    if (name.value) {
         const now = new Date().toISOString();
 
         createTypeDocument({
@@ -31,7 +31,7 @@ function createTypeDocumentHandler () {
             name: name.value,
             description: description.value,
             document_names: {
-                set: documentNamesIdsToSet
+                set: documentNamesIdsToSet || []
             }
         })
     }
