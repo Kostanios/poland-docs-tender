@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { useTypeDocumentsStore } from '@/stores/typeDocuments';
 import type { DocumentNameEntity } from '@/types/dto/documentName';
 import { useDocumentNameStore } from '@/stores/documentName';
+import { router } from '@/router';
 
 const documentNameStore = useDocumentNameStore();
 const store = useTypeDocumentsStore();
@@ -50,7 +51,7 @@ onMounted(() => {
 
 </script>
 <template>
-    <v-row>
+    <v-row class="edit-type-form">
         <v-col cols="12" lg="12">
             <v-label
                 class="mb-2 font-weight-medium"
@@ -81,8 +82,9 @@ onMounted(() => {
                 hide-details
             />
         </v-col>
-        <v-btn @click="createTypeDocumentHandler" color="primary" variant="flat" dark>
+        <v-btn @click="createTypeDocumentHandler" color="success" variant="flat" dark>
             Добавить Типовой Документ
         </v-btn>
+        <v-btn @click="router.back" color="error" variant="flat" dark>Отмена</v-btn>
     </v-row>
 </template>
