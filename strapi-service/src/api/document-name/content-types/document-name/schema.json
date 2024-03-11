@@ -31,9 +31,9 @@
       "type": "integer",
       "default": 1
     },
-    "typical_document": {
+    "typical_documents": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::typical-document.typical-document",
       "inversedBy": "document_names"
     }

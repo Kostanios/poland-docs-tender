@@ -2,12 +2,16 @@
 import { storeToRefs } from "pinia";
 import { nextTick, ref, watch } from 'vue';
 import UiParentCard from '@/components/shared/UiParentCard.vue';
-import { useTypeDocumentsStore } from '@/stores/typeDocuments';
+import { useTypeDocumentsStore } from '@/stores/typeDocuments.store';
 import { router } from '@/router';
+import TypeDocumentsFilters from '@/views/dashboards/type-documents/TypeDocumentsFilters.vue';
+import { useCustomizerStore } from '@/stores/customizer';
 
 const typeModelStore = useTypeDocumentsStore();
 const getTypeDocumentsPage = typeModelStore.getTypeDocumentsPage;
 const deleteTypeDocument = typeModelStore.deleteTypeDocument;
+const customizer = useCustomizerStore();
+
 const {
     typeDocuments,
     total,
@@ -57,6 +61,7 @@ function deleteItem(item) {
     dialogDelete.value = true
 }
 function deleteItemConfirm() {
+    customizer.showNotification(`Документ Успешно Удален!`, 'success');
     deleteTypeDocument(typeDocuments.value[editedIndex.value].id)
     typeDocuments.value.splice(editedIndex.value, 1)
     closeDelete()
@@ -96,27 +101,27 @@ function redirectToDocumentsCreatePage () {
 
 <template>
     <UiParentCard title="Типовые Документы">
+        <TypeDocumentsFilters/>
         <v-data-table-server
             class="border rounded-md document-type-table"
             :headers="headers"
             :items="typeDocuments"
             :items-length="total"
-            :sort-by="[{ key: 'calories', order: 'asc' }]"
             :loading="loading"
             @update:options="getTypeDocumentsPage"
         >
             <template v-slot:top>
                 <v-toolbar class="bg-lightsecondary" flat>
                     <v-spacer></v-spacer>
-                    <v-btn @click="redirectToDocumentsCreatePage" color="primary"  variant="flat" dark >Добавить Типовой Документ</v-btn>
+                    <v-btn @click="redirectToDocumentsCreatePage" color="primary"  variant="flat" dark type="button">Добавить Типовой Документ</v-btn>
                     <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
                             <v-card-title class="text-h5 text-center py-6">Вы уверены что хотите удалить документ?</v-card-title>
                             <v-card-actions>
-                                <v-spacer></v-spacer>
+                                <v-spacer/>
                                 <v-btn color="error" variant="flat" dark @click="closeDelete">отмена</v-btn>
                                 <v-btn color="success" variant="flat" dark @click="deleteItemConfirm">ок</v-btn>
-                                <v-spacer></v-spacer>
+                                <v-spacer/>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>

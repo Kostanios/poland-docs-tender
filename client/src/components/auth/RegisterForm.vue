@@ -11,14 +11,14 @@ const valid = ref(true);
 const password = ref('');
 const email = ref('');
 const passwordRules = ref([
-    (v: string) => !!v || 'Password is required',
-    (v: string) => (v && v.length <= 20) || 'Password must be less than 20 characters'
+    (v: string) => !!v || 'Пароль обязательный',
+    (v: string) => (v && v.length <= 30) || 'Пароль должен быть меньше чем 30 символов'
 ]);
-const emailRules = ref([(v: string) => !!v || 'E-mail is required', (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid']);
+const emailRules = ref([(v: string) => !!v || 'E-mail обязательно', (v: string) => /.+@.+\..+/.test(v) || 'E-mail должен быть валидным']);
 const fname = ref('');
 const fnameRules = ref([
-    (v: string) => !!v || 'Name is required',
-    (v: string) => (v && v.length <= 20) || 'Name must be less than 20 characters'
+    (v: string) => !!v || 'Имя обязательно',
+    (v: string) => (v && v.length <= 30) || 'Имя должно быть меньше чем 30 символов'
 ]);
 
 function validate(values: any, { setErrors }: any) {

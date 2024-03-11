@@ -6,19 +6,24 @@ import {
     getTypeDocumentsPage,
     updateTypeDocument
 } from '@/services/typeDocumentsService';
-import type { GetTablePaginationParams } from '@/interfaces/documentTypes';
+import type { GetTableParams } from '@/interfaces/documentTypes';
 import type { TypicalDocument, TypicalDocumentEntity } from '@/types/dto/typicalDocument';
-import { router } from '@/router';
+
+const defaultSort = 'updatedAt:desc';
 
 interface TypeDocumentsStore {
     typeDocuments: TypicalDocumentEntity[],
     typeDocumentDetails: TypicalDocumentEntity | null,
     total: number,
+    filters: Record<string, number>,
     params: {
+        [filter: string]: string | any
         pagination: {
             page: number,
             pageSize: number,
-        }
+        },
+        filters?: string[],
+        sort: string
     },
     loading: boolean
 }
@@ -30,17 +35,20 @@ export const useTypeDocumentsStore = defineStore({
         // @ts-ignore
         typeDocuments: [],
         typeDocumentDetails: null,
+        filters: {},
         total: 0,
         params: {
             pagination: {
                 page: 0,
                 pageSize: 10,
-            }
+            },
+            sort: defaultSort
         },
         loading: false
     }),
+
     actions: {
-        async createTypeDocument (data: TypicalDocument & { document_names: { set: number [] }}) {
+        async createTypeDocument (data: TypicalDocument & { document_names: { set: number [] }}, onSuccess?: () => void) {
             try {
                 this.loading = true;
 
@@ -50,7 +58,9 @@ export const useTypeDocumentsStore = defineStore({
 
                 this.typeDocumentDetails = { ...res.data.data.attributes, id: res.data.data.id }
 
-                router.back();
+                if (onSuccess) {
+                    onSuccess();
+                }
             } catch (e) {
                 console.error(e);
                 this.loading = false;
@@ -87,6 +97,7 @@ export const useTypeDocumentsStore = defineStore({
                 if (onSuccess) {
                     onSuccess();
                 }
+
                 return this.typeDocumentDetails;
             } catch (e) {
                 console.error(e);
@@ -106,18 +117,28 @@ export const useTypeDocumentsStore = defineStore({
                 this.loading = false;
             }
         },
-        async getTypeDocumentsPage (pagination: GetTablePaginationParams | undefined) {
+        async getTypeDocumentsPage (tableParams: GetTableParams & { filters?: Record<string, number> } | undefined) {
             try {
                 this.loading = true;
 
-                const newParams = {
-                    ...pagination && {
-                        pageSize: pagination.itemsPerPage,
-                        page: pagination.page
+                const newParamsPagination = {
+                    ...tableParams && {
+                        pageSize: tableParams.itemsPerPage || this.params.pagination.pageSize,
+                        page: tableParams.page
                     }
                 }
 
-                this.params = { ...this.params, pagination: { ...this.params.pagination, ...newParams } }
+                const sortParam = tableParams?.sortBy?.[0];
+
+                const sort = sortParam && `${sortParam.key}:${sortParam.order}`
+
+                this.filters = tableParams?.filters || this.filters;
+
+                this.params = {
+                    pagination: { ...this.params.pagination, ...newParamsPagination },
+                    sort: sort || defaultSort,
+                    ...this.filters
+                }
 
                 const res = await getTypeDocumentsPage(this.params);
 

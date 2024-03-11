@@ -13,8 +13,8 @@ const valid = ref(false);
 const password = ref('');
 const username = ref('');
 const passwordRules = ref([
-    (v: string) => !!v || 'Password is required',
-    (v: string) => (v && v.length <= 20) || 'Password must be less than 20 characters'
+    (v: string) => !!v || 'Пароль обязательный',
+    (v: string) => (v && v.length <= 30) || 'Пароль должен быть меньше чем 30 символов'
 ]);
 
 function validate(values: any, { setErrors }: any) {
@@ -61,7 +61,7 @@ function validate(values: any, { setErrors }: any) {
             class="pwdInput"
         ></VTextField>
         <div class="d-flex flex-wrap align-center my-3 ml-n2">
-            <v-checkbox v-model="checkbox" :rules="[(v:any) => !!v || 'You must agree to continue!']" required hide-details color="primary">
+            <v-checkbox v-model="checkbox" required hide-details color="primary">
                 <template v-slot:label class="">Запомнить устройтво</template>
             </v-checkbox>
         </div>

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { GetTablePaginationParams } from '@/interfaces/documentTypes';
+import type { GetTableParams } from '@/interfaces/documentTypes';
 import { getDocumentNamesPage } from '@/services/documentNameService';
 import type { DocumentNameEntity } from '@/types/dto/documentName';
 
@@ -13,13 +13,13 @@ interface DocumentNameStore {
             pageSize: number,
         },
         filters?: {
-            typical_document?: {
+            typical_documents?: {
                 id: {
                     $eq: string
                 }
             }
         },
-        populate?: 'typical_document'
+        populate?: 'typical_documents',
     },
     loading: boolean
 }
@@ -41,7 +41,7 @@ export const useDocumentNameStore = defineStore({
         loading: false
     }),
     actions: {
-        async getDocumentNamesPage (params?: Partial<GetTablePaginationParams & { typicalDocumentsId?: string, populate?: 'typical_document' }> | undefined) {
+        async getDocumentNamesPage (params?: Partial<GetTableParams & { typicalDocumentsId?: string, populate?: 'typical_documents' }> | undefined) {
             try {
                 this.loading = true;
 
@@ -57,7 +57,7 @@ export const useDocumentNameStore = defineStore({
                 if (params?.typicalDocumentsId) {
                     this.params = {
                         ...this.params, filters: {
-                            typical_document: {
+                            typical_documents: {
                                 id: {
                                     $eq: params.typicalDocumentsId
                                 }

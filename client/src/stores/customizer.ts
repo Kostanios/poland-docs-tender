@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import config from '@/config'
+import { ref } from 'vue';
 
 
 export const useCustomizerStore = defineStore({
@@ -13,11 +14,23 @@ export const useCustomizerStore = defineStore({
     actTheme: config.actTheme,
     inputBg: config.inputBg,
     boxed: config.boxed,
-    setBorderCard: config.setBorderCard
+    setBorderCard: config.setBorderCard,
+    notificationView: false,
+    notificationText: '',
+    notificationColor: 'info',
   }),
 
   getters: {},
   actions: {
+    showNotification(message: string, color: 'info' | 'success' | 'error') {
+      this.notificationColor = color;
+        this.notificationText = message;
+        this.notificationView = true;
+
+        setTimeout(() => {
+          this.notificationView = false;
+        }, 3000);
+    },
     SET_SIDEBAR_DRAWER() {
       this.Sidebar_drawer = !this.Sidebar_drawer;
     },

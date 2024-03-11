@@ -1,5 +1,10 @@
-export interface GetTablePaginationParams {
+export interface GetTableParams {
     page: number
     itemsPerPage: number
-    sortBy: string
+    sortBy?: SortKey[]
+}
+
+interface SortKey {
+    key: string
+    order: string
 }

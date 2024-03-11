@@ -891,9 +891,9 @@ export interface ApiDocumentNameDocumentName extends Schema.CollectionType {
     inputType: Attribute.Enumeration<['multiple', 'single']> &
       Attribute.DefaultTo<'single'>;
     order: Attribute.Integer & Attribute.DefaultTo<1>;
-    typical_document: Attribute.Relation<
+    typical_documents: Attribute.Relation<
       'api::document-name.document-name',
-      'manyToOne',
+      'manyToMany',
       'api::typical-document.typical-document'
     >;
     createdAt: Attribute.DateTime;
@@ -931,7 +931,7 @@ export interface ApiTypicalDocumentTypicalDocument
     description: Attribute.Text;
     document_names: Attribute.Relation<
       'api::typical-document.typical-document',
-      'oneToMany',
+      'manyToMany',
       'api::document-name.document-name'
     >;
     createdAt: Attribute.DateTime;

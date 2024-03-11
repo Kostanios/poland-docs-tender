@@ -20,9 +20,9 @@
     },
     "document_names": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::document-name.document-name",
-      "mappedBy": "typical_document"
+      "mappedBy": "typical_documents"
     }
   }
 }

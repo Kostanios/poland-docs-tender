@@ -1,4 +1,4 @@
-import type { TypicalDocument, TypicalDocumentDTO } from '@/types/dto/typicalDocument';
+import type { TypicalDocumentDTO } from '@/types/dto/typicalDocument';
 
 export type DocumentName = {
     createdAt: string
@@ -31,7 +31,7 @@ export type DocumentNameEntity = {
     Document_file_list: string
     publishedAt: string
     updatedAt: string
-    typical_document?: {
-        data: TypicalDocumentDTO
+    typical_documents?: {
+        data: TypicalDocumentDTO[]
     }
 }

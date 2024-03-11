@@ -3,7 +3,7 @@ import { onUnmounted, ref } from 'vue';
 
 import BaseBreadcrumb from "@/components/shared/BaseBreadcrumb.vue";
 import TypeDocumentsTable from '@/views/dashboards/type-documents/TypeDocumentsTable.vue';
-import { useTypeDocumentsStore } from '@/stores/typeDocuments';
+import { useTypeDocumentsStore } from '@/stores/typeDocuments.store';
 
 const store = useTypeDocumentsStore();
 
@@ -24,6 +24,6 @@ onUnmounted(() => store.$reset());
 </script>
 
 <template>
-    <BaseBreadcrumb :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+    <BaseBreadcrumb :breadcrumbs="breadcrumbs"/>
     <TypeDocumentsTable/>
 </template>
