@@ -6,13 +6,13 @@ import { storeToRefs } from 'pinia';
 import debounce from '@/utils/debounce';
 import { useDocumentNameStore } from '@/stores/documentName.store';
 import { router } from '@/router';
-import type { DocumentNameEntity } from '@/types/dto/documentName'
-import { useCustomizerStore } from '@/stores/customizer';
+import type { DocumentNameEntity } from '@/types/dto/documentName';
+import { useNotificationStore } from '@/stores/notofication.store';
 
 const route = useRoute();
 const id = route.params.id;
 const form = ref()
-const customizer = useCustomizerStore();
+const notifications = useNotificationStore();
 const typeDocumentsStore = useTypeDocumentsStore();
 const documentNameStore = useDocumentNameStore();
 const { typeDocumentDetails } = storeToRefs(typeDocumentsStore);
@@ -65,7 +65,7 @@ function editTypeDocumentHandler () {
                 .find(documentNameObj => documentNameObj.name === documentName)?.id
         );
         const onSuccess = () => {
-            customizer.showNotification(`Документ Успешно Обновлен!`, 'success');
+            notifications.showNotification(`Документ Успешно Обновлен!`, 'success');
             router.push('/type-document');
         };
 

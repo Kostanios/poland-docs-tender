@@ -5,12 +5,12 @@ import UiParentCard from '@/components/shared/UiParentCard.vue';
 import { useTypeDocumentsStore } from '@/stores/typeDocuments.store';
 import { router } from '@/router';
 import TypeDocumentsFilters from '@/views/dashboards/type-documents/TypeDocumentsFilters.vue';
-import { useCustomizerStore } from '@/stores/customizer';
+import { useNotificationStore } from '@/stores/notofication.store';
 
 const typeModelStore = useTypeDocumentsStore();
 const getTypeDocumentsPage = typeModelStore.getTypeDocumentsPage;
 const deleteTypeDocument = typeModelStore.deleteTypeDocument;
-const customizer = useCustomizerStore();
+const notifications = useNotificationStore();
 
 const {
     typeDocuments,
@@ -61,7 +61,7 @@ function deleteItem(item) {
     dialogDelete.value = true
 }
 function deleteItemConfirm() {
-    customizer.showNotification(`Документ Успешно Удален!`, 'success');
+    notifications.showNotification(`Документ Успешно Удален!`, 'success');
     deleteTypeDocument(typeDocuments.value[editedIndex.value].id)
     typeDocuments.value.splice(editedIndex.value, 1)
     closeDelete()

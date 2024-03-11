@@ -4,12 +4,12 @@ import { useTypeDocumentsStore } from '@/stores/typeDocuments.store';
 import type { DocumentNameEntity } from '@/types/dto/documentName';
 import { useDocumentNameStore } from '@/stores/documentName.store';
 import { router } from '@/router';
-import { useCustomizerStore } from '@/stores/customizer';
+import { useNotificationStore } from '@/stores/notofication.store';
 
 const documentNameStore = useDocumentNameStore();
 const form = ref()
 const store = useTypeDocumentsStore();
-const customizer = useCustomizerStore();
+const notifications = useNotificationStore();
 
 const name = ref<string | null>(null);
 const description = ref<string | null>(null);
@@ -39,7 +39,7 @@ function createTypeDocumentHandler () {
         const now = new Date().toISOString();
 
         const onSuccess = () => {
-            customizer.showNotification(`Документ Успешно Создан!`, 'success');
+            notifications.showNotification(`Документ Успешно Создан!`, 'success');
             router.push('/type-document');
         };
 
