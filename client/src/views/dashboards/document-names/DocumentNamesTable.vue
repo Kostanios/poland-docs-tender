@@ -2,21 +2,20 @@
 import { storeToRefs } from "pinia";
 import { nextTick, ref, watch } from 'vue';
 import UiParentCard from '@/components/shared/UiParentCard.vue';
-import { useTypeDocumentsStore } from '@/stores/typeDocuments.store';
 import { router } from '@/router';
-import TypeDocumentsFilters from '@/views/dashboards/type-documents/TypeDocumentsFilters.vue';
 import { useNotificationStore } from '@/stores/notofication.store';
+import { useDocumentNameStore } from '@/stores/documentName.store';
 
-const typeModelStore = useTypeDocumentsStore();
-const getTypeDocumentsPage = typeModelStore.getTypeDocumentsPage;
-const deleteTypeDocument = typeModelStore.deleteTypeDocument;
+const documentNameStore = useDocumentNameStore();
+const getDocumentNamesPage = documentNameStore.getDocumentNamesPage;
 const notifications = useNotificationStore();
+const deleteDocumentName = documentNameStore.deleteDocumentName;
 
 const {
-    typeDocuments,
+    documentNames,
     total,
     loading,
-} = storeToRefs(typeModelStore);
+} = storeToRefs(documentNameStore);
 const dialog = ref(false)
 const dialogDelete = ref(false)
 const headers = ref([
@@ -56,14 +55,14 @@ const defaultItem = ref({
 })
 
 function deleteItem(item) {
-    editedIndex.value = typeDocuments.value.indexOf(item)
+    editedIndex.value = documentNames.value.indexOf(item)
     editedItem.value = Object.assign({}, item)
     dialogDelete.value = true
 }
 function deleteItemConfirm() {
     notifications.showNotification(`Документ Успешно Удален!`, 'success');
-    deleteTypeDocument(typeDocuments.value[editedIndex.value].id)
-    typeDocuments.value.splice(editedIndex.value, 1)
+    deleteDocumentName(documentNames.value[editedIndex.value].id)
+    documentNames.value.splice(editedIndex.value, 1)
     closeDelete()
 }
 
@@ -76,9 +75,9 @@ function closeDelete() {
 }
 function save() {
     if (editedIndex.value > -1) {
-        Object.assign(typeDocuments.value[editedIndex.value], editedItem.value)
+        Object.assign(documentNames.value[editedIndex.value], editedItem.value)
     } else {
-        typeDocuments.value.push(editedItem.value)
+        documentNames.value.push(editedItem.value)
     }
     close()
 }
@@ -90,30 +89,29 @@ watch(dialogDelete, val => {
 })
 
 function redirectToDocumentsEditPage (item) {
-    router.push(`/type-document/${item.id}`);
+    router.push(`/document-name/${item.id}`);
 }
 
-function redirectToDocumentsCreatePage () {
-    router.push(`/type-document-create`);
+function redirectToDocumentNameCreatePage () {
+    router.push(`/document-name-create`);
 }
 
 </script>
 
 <template>
     <UiParentCard title="Типовые Документы">
-        <TypeDocumentsFilters/>
         <v-data-table-server
             class="border rounded-md document-type-table"
             :headers="headers"
-            :items="typeDocuments"
+            :items="documentNames"
             :items-length="total"
             :loading="loading"
-            @update:options="getTypeDocumentsPage"
+            @update:options="getDocumentNamesPage"
         >
             <template v-slot:top>
                 <v-toolbar class="bg-lightsecondary" flat>
                     <v-spacer></v-spacer>
-                    <v-btn @click="redirectToDocumentsCreatePage" color="primary"  variant="flat" dark type="button">Добавить Типовой Документ</v-btn>
+                    <v-btn @click="redirectToDocumentNameCreatePage" color="primary" variant="flat" dark type="button">Добавить Наименование Документа</v-btn>
                     <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
                             <v-card-title class="text-h5 text-center py-6">Вы уверены что хотите удалить документ?</v-card-title>

@@ -11,14 +11,14 @@ const valid = ref(true);
 const password = ref('');
 const email = ref('');
 const passwordRules = ref([
-    (v: string) => !!v || 'Password is required',
-    (v: string) => (v && v.length <= 20) || 'Password must be less than 20 characters'
+    (v: string) => !!v || 'Пароль обязательный',
+    (v: string) => (v && v.length <= 30) || 'Пароль должен быть меньше чем 30 символов'
 ]);
-const emailRules = ref([(v: string) => !!v || 'E-mail is required', (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid']);
+const emailRules = ref([(v: string) => !!v || 'E-mail обязательно', (v: string) => /.+@.+\..+/.test(v) || 'E-mail должен быть валидным']);
 const fname = ref('');
 const fnameRules = ref([
-    (v: string) => !!v || 'Name is required',
-    (v: string) => (v && v.length <= 20) || 'Name must be less than 20 characters'
+    (v: string) => !!v || 'Имя обязательно',
+    (v: string) => (v && v.length <= 30) || 'Имя должно быть меньше чем 30 символов'
 ]);
 
 function validate(values: any, { setErrors }: any) {
@@ -47,11 +47,11 @@ function validate(values: any, { setErrors }: any) {
 <!--        </div> -->
 <!--    </div>-->
     <Form @submit="validate" v-slot="{ errors, isSubmitting }" class="mt-5">
-        <v-label class="text-subtitle-1 font-weight-medium pb-2">Name</v-label>
+        <v-label class="text-subtitle-1 font-weight-medium pb-2">Имя</v-label>
         <VTextField v-model="fname" :rules="fnameRules" required ></VTextField>
-        <v-label class="text-subtitle-1 font-weight-medium pb-2">Email Adddress</v-label>
+        <v-label class="text-subtitle-1 font-weight-medium pb-2">e-mail</v-label>
         <VTextField v-model="email" :rules="emailRules" required ></VTextField>
-        <v-label class="text-subtitle-1 font-weight-medium pb-2">Password</v-label>
+        <v-label class="text-subtitle-1 font-weight-medium pb-2">пароль</v-label>
         <VTextField
             v-model="password"
             :rules="passwordRules"
@@ -60,7 +60,7 @@ function validate(values: any, { setErrors }: any) {
             type="password"
             color="primary"
         ></VTextField>
-        <v-btn :loading="isSubmitting" size="large" class="mt-2" color="primary" block type="submit" flat>Sign Up</v-btn>
+        <v-btn :loading="isSubmitting" size="large" class="mt-2" color="primary" block type="submit" flat>Зарегистрироваться</v-btn>
         <div v-if="errors.apiError" class="mt-2">
             <v-alert color="error">{{ errors.apiError }}</v-alert>
         </div>

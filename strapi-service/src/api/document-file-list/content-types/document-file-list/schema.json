@@ -18,12 +18,6 @@
       "target": "api::document-list.document-list",
       "inversedBy": "document_file_lists"
     },
-    "document_name": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::document-name.document-name",
-      "inversedBy": "document_file_list"
-    },
     "uploadedAt": {
       "type": "datetime"
     }

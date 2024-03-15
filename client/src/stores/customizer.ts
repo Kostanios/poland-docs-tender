@@ -13,7 +13,7 @@ export const useCustomizerStore = defineStore({
     actTheme: config.actTheme,
     inputBg: config.inputBg,
     boxed: config.boxed,
-    setBorderCard: config.setBorderCard
+    setBorderCard: config.setBorderCard,
   }),
 
   getters: {},

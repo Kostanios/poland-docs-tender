@@ -362,6 +362,171 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiDocumentFileListDocumentFileList
+  extends Schema.CollectionType {
+  collectionName: 'document_file_lists';
+  info: {
+    singularName: 'document-file-list';
+    pluralName: 'document-file-lists';
+    displayName: 'documentFile';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    document_list: Attribute.Relation<
+      'api::document-file-list.document-file-list',
+      'manyToOne',
+      'api::document-list.document-list'
+    >;
+    uploadedAt: Attribute.DateTime;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::document-file-list.document-file-list',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::document-file-list.document-file-list',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDocumentListDocumentList extends Schema.CollectionType {
+  collectionName: 'document_lists';
+  info: {
+    singularName: 'document-list';
+    pluralName: 'document-lists';
+    displayName: 'DocumentList';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    users_permissions_user: Attribute.Relation<
+      'api::document-list.document-list',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    document_names: Attribute.Relation<
+      'api::document-list.document-list',
+      'manyToMany',
+      'api::document-name.document-name'
+    >;
+    document_file_lists: Attribute.Relation<
+      'api::document-list.document-list',
+      'oneToMany',
+      'api::document-file-list.document-file-list'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::document-list.document-list',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::document-list.document-list',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDocumentNameDocumentName extends Schema.CollectionType {
+  collectionName: 'document_names';
+  info: {
+    singularName: 'document-name';
+    pluralName: 'document-names';
+    displayName: 'documentName';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    inputType: Attribute.Enumeration<['multiple', 'single']> &
+      Attribute.DefaultTo<'single'>;
+    order: Attribute.Integer & Attribute.DefaultTo<1>;
+    typical_documents: Attribute.Relation<
+      'api::document-name.document-name',
+      'manyToMany',
+      'api::typical-document.typical-document'
+    >;
+    document_lists: Attribute.Relation<
+      'api::document-name.document-name',
+      'manyToMany',
+      'api::document-list.document-list'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::document-name.document-name',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::document-name.document-name',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTypicalDocumentTypicalDocument
+  extends Schema.CollectionType {
+  collectionName: 'typical_documents';
+  info: {
+    singularName: 'typical-document';
+    pluralName: 'typical-documents';
+    displayName: 'typicalDocument';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    description: Attribute.Text;
+    document_names: Attribute.Relation<
+      'api::typical-document.typical-document',
+      'manyToMany',
+      'api::document-name.document-name'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::typical-document.typical-document',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::typical-document.typical-document',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -792,168 +957,6 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
-export interface ApiDocumentFileListDocumentFileList
-  extends Schema.CollectionType {
-  collectionName: 'document_file_lists';
-  info: {
-    singularName: 'document-file-list';
-    pluralName: 'document-file-lists';
-    displayName: 'documentFile';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    document_list: Attribute.Relation<
-      'api::document-file-list.document-file-list',
-      'manyToOne',
-      'api::document-list.document-list'
-    >;
-    document_name: Attribute.Relation<
-      'api::document-file-list.document-file-list',
-      'oneToOne',
-      'api::document-name.document-name'
-    >;
-    uploadedAt: Attribute.DateTime;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::document-file-list.document-file-list',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::document-file-list.document-file-list',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiDocumentListDocumentList extends Schema.CollectionType {
-  collectionName: 'document_lists';
-  info: {
-    singularName: 'document-list';
-    pluralName: 'document-lists';
-    displayName: 'DocumentList';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    users_permissions_user: Attribute.Relation<
-      'api::document-list.document-list',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    document_names: Attribute.Relation<
-      'api::document-list.document-list',
-      'oneToMany',
-      'api::document-name.document-name'
-    >;
-    document_file_lists: Attribute.Relation<
-      'api::document-list.document-list',
-      'oneToMany',
-      'api::document-file-list.document-file-list'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::document-list.document-list',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::document-list.document-list',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiDocumentNameDocumentName extends Schema.CollectionType {
-  collectionName: 'document_names';
-  info: {
-    singularName: 'document-name';
-    pluralName: 'document-names';
-    displayName: 'documentName';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required;
-    description: Attribute.Text;
-    inputType: Attribute.Enumeration<['multiple', 'single']> &
-      Attribute.DefaultTo<'single'>;
-    order: Attribute.Integer & Attribute.DefaultTo<1>;
-    document_file_list: Attribute.Relation<
-      'api::document-name.document-name',
-      'oneToOne',
-      'api::document-file-list.document-file-list'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::document-name.document-name',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::document-name.document-name',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiModelDocumentModelDocument extends Schema.CollectionType {
-  collectionName: 'model_documents';
-  info: {
-    singularName: 'model-document';
-    pluralName: 'model-documents';
-    displayName: 'modelDocument';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    modelName: Attribute.String & Attribute.Required;
-    description: Attribute.Text;
-    document_names: Attribute.Relation<
-      'api::model-document.model-document',
-      'oneToMany',
-      'api::document-name.document-name'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::model-document.model-document',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::model-document.model-document',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -964,6 +967,10 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::document-file-list.document-file-list': ApiDocumentFileListDocumentFileList;
+      'api::document-list.document-list': ApiDocumentListDocumentList;
+      'api::document-name.document-name': ApiDocumentNameDocumentName;
+      'api::typical-document.typical-document': ApiTypicalDocumentTypicalDocument;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -972,10 +979,6 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
-      'api::document-file-list.document-file-list': ApiDocumentFileListDocumentFileList;
-      'api::document-list.document-list': ApiDocumentListDocumentList;
-      'api::document-name.document-name': ApiDocumentNameDocumentName;
-      'api::model-document.model-document': ApiModelDocumentModelDocument;
     }
   }
 }

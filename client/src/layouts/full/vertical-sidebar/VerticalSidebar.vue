@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue';
+import { shallowRef } from 'vue';
 import { useCustomizerStore } from '@/stores/customizer';
 import sidebarItems from './sidebarItem';
 
 import NavGroup from './NavGroup/index.vue';
 import NavItem from './NavItem/index.vue';
 import NavCollapse from './NavCollapse/NavCollapse.vue';
-import Logo from '../logo/Logo.vue';
 import { useAuthStore } from '@/stores/auth';
 import { PowerIcon } from 'vue-tabler-icons';
 const customizer = useCustomizerStore();
@@ -29,7 +28,7 @@ const authStore = useAuthStore();
                     </v-avatar>
                 </div>
                 <div class="profile-name d-flex align-center px-3">
-                    <h5 class="text-white font-weight-medium">Julia Roberts</h5>
+                    <h5 class="text-white font-weight-medium">{{authStore.user.username}}</h5>
                     <div class="ml-auto profile-logout">
                         <v-btn variant="text" icon rounded="md" color="white" @click="authStore.logout()">
                             <PowerIcon size="22"/>

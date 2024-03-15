@@ -20,8 +20,9 @@
     },
     "document_names": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::document-name.document-name"
+      "relation": "manyToMany",
+      "target": "api::document-name.document-name",
+      "inversedBy": "document_lists"
     },
     "document_file_lists": {
       "type": "relation",

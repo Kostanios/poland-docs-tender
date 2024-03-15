@@ -4,7 +4,8 @@
   "info": {
     "singularName": "document-name",
     "pluralName": "document-names",
-    "displayName": "documentName"
+    "displayName": "documentName",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -30,11 +31,17 @@
       "type": "integer",
       "default": 1
     },
-    "document_file_list": {
+    "typical_documents": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::document-file-list.document-file-list",
-      "mappedBy": "document_name"
+      "relation": "manyToMany",
+      "target": "api::typical-document.typical-document",
+      "inversedBy": "document_names"
+    },
+    "document_lists": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::document-list.document-list",
+      "inversedBy": "document_names"
     }
   }
 }
