@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiParentCard from '@/components/shared/UiParentCard.vue';
 import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
-import CreateTypeDocumentForm from '@/views/dashboards/type-documents/CreateTypeDocumentForm.vue';
+import CreateDocumentNameForm from '@/views/dashboards/document-names/CreateDocumentNameForm.vue';
 import { ref } from 'vue';
 
 const breadcrumbs = ref([
@@ -11,14 +11,13 @@ const breadcrumbs = ref([
         href: "#",
     },
     {
-        text: "Список Типовых Документов",
+        text: "Список Наименований Документов",
         disabled: false,
-        href: "/type-document",
+        href: "/document-name",
     },
     {
-        text: "Создание Типового Документа",
+        text: "Создание Наименования Документа",
         disabled: true,
-        href: "#",
     },
 ]);
 
@@ -26,7 +25,7 @@ const breadcrumbs = ref([
 
 <template>
     <BaseBreadcrumb :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-    <UiParentCard title="Создание Типового Документа">
-        <CreateTypeDocumentForm/>
+    <UiParentCard title="Создание Наименования Документа">
+        <CreateDocumentNameForm/>
     </UiParentCard>
 </template>

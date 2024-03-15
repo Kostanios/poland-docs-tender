@@ -18,7 +18,7 @@ export interface StrapiContentPagination {
 }
 
 export interface GetStrapiPaginationParams {
-    pagination: {
+    pagination?: {
         page: number,
         pageSize: number
     }

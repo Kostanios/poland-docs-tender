@@ -1,9 +1,14 @@
+import type { DocumentNameEntity } from '@/types/dto/documentName';
+
 export type TypicalDocument = {
     createdAt: string
     description: string | null
     name: string
     publishedAt: string
     updatedAt: string
+    document_names?: {
+        data?: DocumentNameEntity[]
+    }
 }
 
 export type TypicalDocumentDTO = {
@@ -18,4 +23,7 @@ export type TypicalDocumentEntity = {
     publishedAt: string
     updatedAt: string
     id: number
+    document_names?: {
+        data?: DocumentNameEntity[]
+    }
 }

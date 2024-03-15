@@ -25,8 +25,8 @@ const breadcrumbs = ref([
 </script>
 
 <template>
-    <BaseBreadcrumb :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-    <UiParentCard title="Редактирование Документа">
+    <BaseBreadcrumb :breadcrumbs="breadcrumbs"/>
+    <UiParentCard title="Редактирование Типового Документа">
         <EditTypeDocumentForm/>
     </UiParentCard>
 </template>

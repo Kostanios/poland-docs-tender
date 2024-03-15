@@ -1,6 +1,7 @@
 import {
   FilesIcon,
   AlertCircleIcon,
+  ScriptIcon
 } from 'vue-tabler-icons';
 
 export interface menu {
@@ -25,6 +26,11 @@ const sidebarItem: menu[] = [
     title: "Типовые Документы",
     icon: FilesIcon,
     to: "/type-document",
+  },
+  {
+    title: "Наименования Документов",
+    icon: ScriptIcon,
+    to: "/document-name",
   },
   {
     title: 'Error',

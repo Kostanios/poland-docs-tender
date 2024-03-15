@@ -1,6 +1,6 @@
 export interface GetTableParams {
-    page: number
-    itemsPerPage: number
+    page?: number
+    itemsPerPage?: number
     sortBy?: SortKey[]
 }
 

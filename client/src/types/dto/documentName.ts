@@ -1,4 +1,5 @@
-import type { TypicalDocumentDTO } from '@/types/dto/typicalDocument';
+import type { TypicalDocument, TypicalDocumentDTO } from '@/types/dto/typicalDocument';
+import type { StrapiContentDTO } from '@/types/strapi';
 
 export type DocumentName = {
     createdAt: string
@@ -6,9 +7,11 @@ export type DocumentName = {
     name: string
     inputType: DocumentNameInputType
     order: number
-    Document_file_list: string
     publishedAt: string
     updatedAt: string
+    typical_documents?: {
+        data?: TypicalDocumentDTO[]
+    }
 }
 
 export type DocumentNameDTO = {
@@ -28,10 +31,9 @@ export type DocumentNameEntity = {
     name: string
     inputType: DocumentNameInputType
     order: number
-    Document_file_list: string
     publishedAt: string
     updatedAt: string
     typical_documents?: {
-        data: TypicalDocumentDTO[]
+        data?:  TypicalDocumentDTO[]
     }
 }

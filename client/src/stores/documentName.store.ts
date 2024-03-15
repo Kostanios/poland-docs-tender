@@ -1,11 +1,17 @@
 import { defineStore } from 'pinia';
 import type { GetTableParams } from '@/interfaces/documentTypes';
-import { getDocumentNamesPage } from '@/services/documentNameService';
-import type { DocumentNameEntity } from '@/types/dto/documentName';
+import {
+    createDocumentName,
+    deleteDocumentName,
+    getDocumentName,
+    getDocumentNamesPage,
+    updateDocumentName
+} from '@/services/documentNameService';
+import type { DocumentName, DocumentNameEntity } from '@/types/dto/documentName';
 
 interface DocumentNameStore {
     documentNames: DocumentNameEntity[],
-    typeDocumentDetails: DocumentNameEntity | null,
+    documentNameDetails: DocumentNameEntity | null,
     total: number,
     params: {
         pagination: {
@@ -30,7 +36,7 @@ export const useDocumentNameStore = defineStore({
         // initialize state from local storage to enable user to stay logged in
         // @ts-ignore
         documentNames: [],
-        typeDocumentDetails: null,
+        documentNameDetails: null,
         total: 0,
         params: {
             pagination: {
@@ -41,6 +47,39 @@ export const useDocumentNameStore = defineStore({
         loading: false
     }),
     actions: {
+        async createDocumentName (data: DocumentName & { typical_documents: { set: number [] }}, onSuccess?: () => void) {
+            try {
+                this.loading = true;
+
+                await createDocumentName(data);
+
+                this.loading = false;
+
+                if (onSuccess) {
+                    onSuccess();
+                }
+            } catch (e) {
+                console.error(e);
+                this.loading = false;
+                return this.documentNameDetails;
+            }
+        },
+        async getDocumentName (id: string) {
+            try {
+                this.loading = true;
+
+                const res = await getDocumentName(id);
+
+                this.loading = false;
+
+                this.documentNameDetails = { ...res.data.data.attributes, id: res.data.data.id }
+
+                return this.documentNameDetails;
+            } catch (e) {
+                console.error(e);
+                this.loading = false;
+            }
+        },
         async getDocumentNamesPage (params?: Partial<GetTableParams & { typicalDocumentsId?: string, populate?: 'typical_documents' }> | undefined) {
             try {
                 this.loading = true;
@@ -88,5 +127,39 @@ export const useDocumentNameStore = defineStore({
                 return this.documentNames;
             }
         },
+        async updateDocumentName (id: string, data: Partial<DocumentName & { typical_documents: { set: number [] }}>, onSuccess?: () => void) {
+            try {
+                this.loading = true;
+
+                const res = await updateDocumentName(id, data);
+
+                this.loading = false;
+
+                this.documentNameDetails = { ...res.data.data.attributes, id: res.data.data.id }
+
+                if (onSuccess) {
+                    onSuccess();
+                }
+
+                return this.documentNameDetails;
+            } catch (e) {
+                console.error(e);
+                this.loading = false;
+            }
+        },
+        async deleteDocumentName (id: string) {
+            try {
+                this.loading = true;
+
+                await deleteDocumentName(id);
+
+                this.loading = false;
+
+                return this.documentNameDetails;
+            } catch (e) {
+                console.error(e);
+                this.loading = false;
+            }
+        }
     }
 });

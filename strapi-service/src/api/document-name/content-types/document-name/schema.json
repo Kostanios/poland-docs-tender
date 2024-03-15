@@ -36,6 +36,12 @@
       "relation": "manyToMany",
       "target": "api::typical-document.typical-document",
       "inversedBy": "document_names"
+    },
+    "document_lists": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::document-list.document-list",
+      "inversedBy": "document_names"
     }
   }
 }

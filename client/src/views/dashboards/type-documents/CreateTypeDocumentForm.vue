@@ -112,6 +112,7 @@ async function submit (e: Event) {
                 />
             </v-col>
             <v-btn
+                placeholder="связанные наименования документов"
                 type="submit"
                 color="success"
                 variant="flat"

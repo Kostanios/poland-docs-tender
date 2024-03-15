@@ -117,6 +117,28 @@ export const useTypeDocumentsStore = defineStore({
                 this.loading = false;
             }
         },
+        async getTypeDocuments (params: { populate?: 'document_names' }) {
+            try {
+                this.loading = true;
+
+                const res = await getTypeDocumentsPage(params);
+
+                this.typeDocuments = res.data?.data.map((e) => ({
+                    ...e.attributes,
+                    id: e.id,
+                }));
+
+                this.total = res.data?.meta.pagination.total;
+
+                this.loading = false;
+
+                return this.typeDocuments;
+            } catch (e) {
+                console.error(e);
+                this.loading = false;
+                return this.typeDocuments;
+            }
+        },
         async getTypeDocumentsPage (tableParams: GetTableParams & { filters?: Record<string, number> } | undefined) {
             try {
                 this.loading = true;
