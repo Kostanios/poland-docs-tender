@@ -47,7 +47,7 @@ function createDocumentNameHandler () {
 
         const onSuccess = () => {
             notifications.showNotification(`Документ Успешно Создан!`, 'success');
-            router.back();
+            router.push('/document-name');
         };
 
         createDocumentName({

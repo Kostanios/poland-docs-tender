@@ -7,7 +7,8 @@ import {
     getDocumentNamesPage,
     updateDocumentName
 } from '@/services/documentNameService';
-import type { DocumentName, DocumentNameEntity } from '@/types/dto/documentName';
+import { type DocumentName, type DocumentNameEntity, DocumentNameInputType } from '@/types/dto/documentName';
+import { filter } from 'lodash';
 
 interface DocumentNameStore {
     documentNames: DocumentNameEntity[],
@@ -23,6 +24,12 @@ interface DocumentNameStore {
                 id: {
                     $eq: string
                 }
+            },
+            name?: {
+                $containsi: string | null
+            }
+            inputType?: {
+                $eq: string | null
             }
         },
         populate?: 'typical_documents',
@@ -80,7 +87,14 @@ export const useDocumentNameStore = defineStore({
                 this.loading = false;
             }
         },
-        async getDocumentNamesPage (params?: Partial<GetTableParams & { typicalDocumentsId?: string, populate?: 'typical_documents' }> | undefined) {
+        async getDocumentNamesPage (params?: Partial<GetTableParams & {
+            typicalDocumentsId?: string,
+            populate?: 'typical_documents',
+            filters: {
+                name?: string,
+                inputType?: DocumentNameInputType
+            }
+        }> | undefined) {
             try {
                 this.loading = true;
 
@@ -104,6 +118,20 @@ export const useDocumentNameStore = defineStore({
                         }
                     };
                 }
+
+                if (params?.filters) {
+                    this.params = {
+                        ...this.params, filters: {
+                            name: {
+                                $containsi: params.filters.name || null
+                            },
+                            inputType: {
+                                $eq: params?.filters.inputType || null
+                            }
+                        }
+                    };
+                }
+
 
                 if (params?.populate) {
                     this.params = {
