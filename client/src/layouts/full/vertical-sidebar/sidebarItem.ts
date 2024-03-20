@@ -31,13 +31,7 @@ const sidebarItem: menu[] = [
     title: "Наименования Документов",
     icon: ScriptIcon,
     to: "/document-name",
-  },
-  {
-    title: 'Error',
-    icon: AlertCircleIcon,
-    to: '/auth/404'
   }
-
 ];
 
 export default sidebarItem;

@@ -35,6 +35,11 @@
     text-wrap: pretty !important;
 }
 
+.document-names-table tr td {
+    max-width: 200px;
+    text-wrap: pretty !important;
+}
+
 .recent-transaction {
     .line {
         width: 2px;

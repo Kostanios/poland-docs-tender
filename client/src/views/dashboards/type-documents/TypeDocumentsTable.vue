@@ -6,6 +6,7 @@ import { useTypeDocumentsStore } from '@/stores/typeDocuments.store';
 import { router } from '@/router';
 import TypeDocumentsFilters from '@/views/dashboards/type-documents/TypeDocumentsFilters.vue';
 import { useNotificationStore } from '@/stores/notofication.store';
+import { TypeDocumentsConfig } from '@/views/dashboards/type-documents/constants';
 
 const typeModelStore = useTypeDocumentsStore();
 const getTypeDocumentsPage = typeModelStore.getTypeDocumentsPage;
@@ -19,45 +20,11 @@ const {
 } = storeToRefs(typeModelStore);
 const dialog = ref(false)
 const dialogDelete = ref(false)
-const headers = ref([
-    {
-        title: 'Название Документа',
-        align: 'start',
-        sortable: true,
-        key: 'name'
-    },
-    {
-        title: 'Описание',
-        align: 'start',
-        sortable: false,
-        key: 'description'
-    },
-    {
-        title: 'Действия',
-        key: 'actions',
-        sortable: false,
-        align: 'end'
-    },
-]);
+const headers = ref(TypeDocumentsConfig);
 const editedIndex = ref(-1)
-const editedItem = ref({
-    name: '',
-    calories: 0,
-    fat: 0,
-    carbs: 0,
-    protein: 0,
-})
-const defaultItem = ref({
-    name: '',
-    calories: 0,
-    fat: 0,
-    carbs: 0,
-    protein: 0,
-})
 
 function deleteItem(item) {
     editedIndex.value = typeDocuments.value.indexOf(item)
-    editedItem.value = Object.assign({}, item)
     dialogDelete.value = true
 }
 function deleteItemConfirm() {
@@ -70,18 +37,10 @@ function deleteItemConfirm() {
 function closeDelete() {
     dialogDelete.value = false
     nextTick(() => {
-        editedItem.value = Object.assign({}, defaultItem.value)
         editedIndex.value = -1
     })
 }
-function save() {
-    if (editedIndex.value > -1) {
-        Object.assign(typeDocuments.value[editedIndex.value], editedItem.value)
-    } else {
-        typeDocuments.value.push(editedItem.value)
-    }
-    close()
-}
+
 watch(dialog, val => {
     val || close()
 })

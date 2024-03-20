@@ -5,6 +5,9 @@ import UiParentCard from '@/components/shared/UiParentCard.vue';
 import { router } from '@/router';
 import { useNotificationStore } from '@/stores/notofication.store';
 import { useDocumentNameStore } from '@/stores/documentName.store';
+import { columnsConfig } from '@/views/dashboards/document-names/constants';
+import { getFileTypeLabel } from '@/views/dashboards/document-names/helper';
+import DocumentNamesFilters from '@/views/dashboards/document-names/DocumentNamesFilters.vue';
 
 const documentNameStore = useDocumentNameStore();
 const getDocumentNamesPage = documentNameStore.getDocumentNamesPage;
@@ -18,47 +21,14 @@ const {
 } = storeToRefs(documentNameStore);
 const dialog = ref(false)
 const dialogDelete = ref(false)
-const headers = ref([
-    {
-        title: 'Название Документа',
-        align: 'start',
-        sortable: true,
-        key: 'name'
-    },
-    {
-        title: 'Описание',
-        align: 'start',
-        sortable: false,
-        key: 'description'
-    },
-    {
-        title: 'Действия',
-        key: 'actions',
-        sortable: false,
-        align: 'end'
-    },
-]);
+const headers = ref(columnsConfig);
 const editedIndex = ref(-1)
-const editedItem = ref({
-    name: '',
-    calories: 0,
-    fat: 0,
-    carbs: 0,
-    protein: 0,
-})
-const defaultItem = ref({
-    name: '',
-    calories: 0,
-    fat: 0,
-    carbs: 0,
-    protein: 0,
-})
 
 function deleteItem(item) {
-    editedIndex.value = documentNames.value.indexOf(item)
-    editedItem.value = Object.assign({}, item)
+    editedIndex.value = documentNames.value.indexOf(item);
     dialogDelete.value = true
 }
+
 function deleteItemConfirm() {
     notifications.showNotification(`Документ Успешно Удален!`, 'success');
     deleteDocumentName(documentNames.value[editedIndex.value].id)
@@ -69,18 +39,10 @@ function deleteItemConfirm() {
 function closeDelete() {
     dialogDelete.value = false
     nextTick(() => {
-        editedItem.value = Object.assign({}, defaultItem.value)
         editedIndex.value = -1
     })
 }
-function save() {
-    if (editedIndex.value > -1) {
-        Object.assign(documentNames.value[editedIndex.value], editedItem.value)
-    } else {
-        documentNames.value.push(editedItem.value)
-    }
-    close()
-}
+
 watch(dialog, val => {
     val || close()
 })
@@ -100,8 +62,9 @@ function redirectToDocumentNameCreatePage () {
 
 <template>
     <UiParentCard title="Типовые Документы">
+        <DocumentNamesFilters/>
         <v-data-table-server
-            class="border rounded-md document-type-table"
+            class="border rounded-md document-names-table"
             :headers="headers"
             :items="documentNames"
             :items-length="total"
@@ -124,6 +87,9 @@ function redirectToDocumentNameCreatePage () {
                         </v-card>
                     </v-dialog>
                 </v-toolbar>
+            </template>
+            <template v-slot:item.inputType="{ item }">
+                {{getFileTypeLabel(item.inputType)}}
             </template>
             <template v-slot:item.actions="{ item }">
                 <v-icon color="info" size="small" class="me-2" @click="redirectToDocumentsEditPage(item)">

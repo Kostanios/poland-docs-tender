@@ -17,7 +17,6 @@ const typeDocumentsStore = useTypeDocumentsStore();
 const documentNameStore = useDocumentNameStore();
 const { documentNameDetails } = storeToRefs(documentNameStore);
 
-
 const name = ref<string | null>(null);
 const order = ref<number>(0)
 const inputType = ref<DocumentNameInputType>(DocumentNameInputType.MULTIPLE);
