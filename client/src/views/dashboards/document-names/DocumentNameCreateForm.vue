@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { DocumentNameInputType } from '@/types/dto/documentName';
 import { useDocumentNameStore } from '@/stores/documentName.store';
 import { router } from '@/router';
-import { useNotificationStore } from '@/stores/notofication.store';
+import { useNotificationStore } from '@/stores/notification.store';
 import { useTypeDocumentsStore } from '@/stores/typeDocuments.store';
 import type { TypicalDocumentEntity } from '@/types/dto/typicalDocument';
 

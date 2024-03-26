@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia';
 import { useDocumentNameStore } from '@/stores/documentName.store';
 import { router } from '@/router';
 import { DocumentNameInputType } from '@/types/dto/documentName';
-import { useNotificationStore } from '@/stores/notofication.store';
+import { useNotificationStore } from '@/stores/notification.store';
 import type { TypicalDocumentEntity } from '@/types/dto/typicalDocument';
 
 const route = useRoute();

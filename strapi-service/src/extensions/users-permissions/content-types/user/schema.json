@@ -90,9 +90,9 @@
     },
     "document_lists": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::document-list.document-list",
-      "mappedBy": "users_permissions_user"
+      "mappedBy": "users_permissions_users"
     }
   }
 }

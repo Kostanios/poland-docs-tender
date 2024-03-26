@@ -4,7 +4,7 @@ import { useTypeDocumentsStore } from '@/stores/typeDocuments.store';
 import type { DocumentNameEntity } from '@/types/dto/documentName';
 import { useDocumentNameStore } from '@/stores/documentName.store';
 import { router } from '@/router';
-import { useNotificationStore } from '@/stores/notofication.store';
+import { useNotificationStore } from '@/stores/notification.store';
 
 const documentNameStore = useDocumentNameStore();
 const form = ref()

@@ -1,7 +1,7 @@
 import {
   FilesIcon,
-  AlertCircleIcon,
-  ScriptIcon
+  ScriptIcon,
+  FileInfoIcon
 } from 'vue-tabler-icons';
 
 export interface menu {
@@ -24,13 +24,18 @@ const sidebarItem: menu[] = [
   { header: 'Домашняя Страница' },
   {
     title: "Типовые Документы",
-    icon: FilesIcon,
+    icon: FileInfoIcon,
     to: "/type-document",
   },
   {
     title: "Наименования Документов",
     icon: ScriptIcon,
     to: "/document-name",
+  },
+  {
+    title: "Группы Документов",
+    icon: FilesIcon,
+    to: "/document-groups",
   }
 ];
 

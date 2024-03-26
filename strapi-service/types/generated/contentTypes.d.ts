@@ -375,11 +375,6 @@ export interface ApiDocumentFileListDocumentFileList
     draftAndPublish: true;
   };
   attributes: {
-    document_list: Attribute.Relation<
-      'api::document-file-list.document-file-list',
-      'manyToOne',
-      'api::document-list.document-list'
-    >;
     uploadedAt: Attribute.DateTime;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -411,9 +406,9 @@ export interface ApiDocumentListDocumentList extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    users_permissions_user: Attribute.Relation<
+    users_permissions_users: Attribute.Relation<
       'api::document-list.document-list',
-      'manyToOne',
+      'manyToMany',
       'plugin::users-permissions.user'
     >;
     document_names: Attribute.Relation<
@@ -426,6 +421,7 @@ export interface ApiDocumentListDocumentList extends Schema.CollectionType {
       'oneToMany',
       'api::document-file-list.document-file-list'
     >;
+    name: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -890,7 +886,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     avatar: Attribute.Media;
     document_lists: Attribute.Relation<
       'plugin::users-permissions.user',
-      'oneToMany',
+      'manyToMany',
       'api::document-list.document-list'
     >;
     createdAt: Attribute.DateTime;

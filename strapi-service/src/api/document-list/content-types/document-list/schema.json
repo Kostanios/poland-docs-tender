@@ -12,9 +12,9 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "users_permissions_user": {
+    "users_permissions_users": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "inversedBy": "document_lists"
     },
@@ -27,8 +27,10 @@
     "document_file_lists": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::document-file-list.document-file-list",
-      "mappedBy": "document_list"
+      "target": "api::document-file-list.document-file-list"
+    },
+    "name": {
+      "type": "string"
     }
   }
 }

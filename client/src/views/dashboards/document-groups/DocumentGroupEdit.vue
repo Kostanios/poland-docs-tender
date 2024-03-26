@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import UiParentCard from '@/components/shared/UiParentCard.vue';
 import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
+import DocumentGroupEditForm from '@/views/dashboards/document-groups/DocumentGroupEditForm.vue';
 import { ref } from 'vue';
-import EditDocumentNameForm from '@/views/dashboards/document-names/EditDocumentNameForm.vue';
 
 const breadcrumbs = ref([
     {
@@ -10,21 +10,20 @@ const breadcrumbs = ref([
         disabled: true,
     },
     {
-        text: "Список Наименований Документов",
+        text: "Список Групп Документов",
         disabled: false,
-        href: "/document-name",
+        href: "/document-groups",
     },
     {
-        text: "Редактирование Наименования Документа",
+        text: "Редактирование Группы Документов",
         disabled: true,
     },
 ]);
-
 </script>
 
 <template>
     <BaseBreadcrumb :breadcrumbs="breadcrumbs"/>
-    <UiParentCard title="Редактирование Наименования Документа">
-        <EditDocumentNameForm/>
+    <UiParentCard title="Редактирование Группы Документов">
+        <DocumentGroupEditForm/>
     </UiParentCard>
 </template>

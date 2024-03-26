@@ -2,10 +2,10 @@
 import { onUnmounted, ref } from 'vue';
 
 import BaseBreadcrumb from "@/components/shared/BaseBreadcrumb.vue";
-import DocumentNamesTable from '@/views/dashboards/document-names/DocumentNamesTable.vue';
-import { useDocumentNameStore } from '@/stores/documentName.store';
+import { useDocumentGroupStore } from '@/stores/documentGroup.store';
+import DocumentGroupEditForm from '@/views/dashboards/document-groups/DocumentGroupEditForm.vue';
 
-const store = useDocumentNameStore();
+const store = useDocumentGroupStore();
 
 const breadcrumbs = ref([
     {
@@ -13,7 +13,7 @@ const breadcrumbs = ref([
         disabled: true
     },
     {
-        text: "Список Наименований Документов",
+        text: "Список Групп Документов",
         disabled: true,
     },
 ]);
@@ -23,5 +23,5 @@ onUnmounted(() => store.$reset());
 
 <template>
     <BaseBreadcrumb :breadcrumbs="breadcrumbs"/>
-    <DocumentNamesTable/>
+    <DocumentGroupEditForm />
 </template>
