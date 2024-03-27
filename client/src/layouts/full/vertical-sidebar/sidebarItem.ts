@@ -35,7 +35,7 @@ const sidebarItem: menu[] = [
   {
     title: "Группы Документов",
     icon: FilesIcon,
-    to: "/document-groups",
+    to: "/document-group",
   }
 ];
 

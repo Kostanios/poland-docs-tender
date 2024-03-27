@@ -2,11 +2,11 @@
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { router } from '@/router';
-import { type DocumentNameEntity, DocumentNameInputType } from '@/types/dto/documentName';
+import { type DocumentNameEntity } from '@/types/dto/documentName';
 import { useNotificationStore } from '@/stores/notification.store';
-import type { TypicalDocumentEntity } from '@/types/dto/typicalDocument';
 import { useDocumentGroupStore } from '@/stores/documentGroup.store';
 import { useDocumentNameStore } from '@/stores/documentName.store';
+import { storeToRefs } from 'pinia';
 
 const route = useRoute();
 const id = route.params.id;
@@ -14,12 +14,11 @@ const form = ref();
 const notifications = useNotificationStore();
 const documentGroupStore = useDocumentGroupStore();
 const documentNameStore = useDocumentNameStore();
+const { documentGroupDetails } = storeToRefs(documentGroupStore);
 
 const name = ref<string | null>(null);
 const selectValue = ref<string[] | null>(null);
-const inputType = ref<DocumentNameInputType>(DocumentNameInputType.MULTIPLE);
 const description = ref<string | null>(null);
-const typicalDocumentsLabels = ref<Object[]>([]);
 const selectedTypicalDocuments = ref<string[] | null>(null);
 
 const nameRules = ref([
@@ -27,17 +26,10 @@ const nameRules = ref([
     (v: string) => (v && v.length <= 30) || 'Название должно быть меньше чем 30 символов'
 ]);
 
-const inputTypes = [{
-    title: 'Список',
-    value: DocumentNameInputType.MULTIPLE
-}, {
-    title: 'Одиночный',
-    value: DocumentNameInputType.SINGLE
-}];
-
 const documentNames = ref<DocumentNameEntity[]>([]);
 const documentNamesLabels = ref<Object[]>([]);
 const getDocumentGroup = documentGroupStore.getDocumentGroup;
+const updateDocumentGroup = documentGroupStore.updateDocumentGroup;
 const getDocumentNamesPage = documentNameStore.getDocumentNamesPage;
 
 onMounted(() => {
@@ -61,40 +53,36 @@ onMounted(() => {
     }
 });
 
-// function editTypeDocumentHandler () {
-//     if (typeof id === 'string' && documentNameDetails.value) {
-//         const { createdAt, publishedAt, updatedAt } = documentNameDetails.value;
-//         const typicalDocumentsIdsToSet = selectedTypicalDocuments.value?.map(selectedTypicalDocumentName =>
-//             typicalDocuments.value
-//                 .find(typicalDocumentsObj => typicalDocumentsObj.name === selectedTypicalDocumentName)?.id as number
-//         );
-//         const onSuccess = () => {
-//             notifications.showNotification(`Документ Успешно Обновлен!`, 'success');
-//             router.push('/document-name');
-//         };
-//
-//         if (name.value) {
-//             updateDocumentName(id, {
-//                 createdAt,
-//                 publishedAt,
-//                 updatedAt,
-//                 description: description.value,
-//                 name: name.value,
-//                 typical_documents: {
-//                     set: typicalDocumentsIdsToSet || []
-//                 }
-//             }, onSuccess)
-//         }
-//
-//     }
-// }
+function editDocumentGroupHandler () {
+    if (typeof id === 'string' && documentGroupDetails.value) {
+        const { createdAt, publishedAt, updatedAt } = documentGroupDetails.value;
+        // const typicalDocumentsIdsToSet = selectedTypicalDocuments.value?.map(selectedTypicalDocumentName =>
+        //     typicalDocuments.value
+        //         .find(typicalDocumentsObj => typicalDocumentsObj.name === selectedTypicalDocumentName)?.id as number
+        // );
+        const onSuccess = () => {
+            notifications.showNotification(`Документ Успешно Обновлен!`, 'success');
+            router.push('/document-group');
+        };
+
+        if (name.value) {
+            updateDocumentGroup(id, {
+                createdAt,
+                publishedAt,
+                updatedAt,
+                name: name.value,
+            }, onSuccess)
+        }
+
+    }
+}
 
 async function submit (e: Event) {
     e.preventDefault();
 
     const { valid } = await form.value.validate();
 
-    // if (valid) editTypeDocumentHandler();
+    if (valid) editDocumentGroupHandler();
 }
 
 </script>

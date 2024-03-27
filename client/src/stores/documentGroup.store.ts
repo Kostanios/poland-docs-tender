@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia';
-import {
-    getDocumentList
-} from '@/services/documentGroupService';
-import type { DocumentGroupEntity } from '@/types/dto/documentGroup';
+import type { DocumentGroup, DocumentGroupEntity } from '@/types/dto/documentGroup';
+import { getDocumentGroup, updateDocumentGroup } from '@/services/documentGroupService';
 
 interface DocumentGroupStore {
     documentGroups: DocumentGroupEntity[],
@@ -38,11 +36,31 @@ export const useDocumentGroupStore = defineStore({
             try {
                 this.loading = true;
 
-                const res = await getDocumentList(id);
+                const res = await getDocumentGroup(id);
 
                 this.loading = false;
 
                 this.documentGroupDetails = { ...res.data.data.attributes, id: res.data.data.id }
+
+                return this.documentGroupDetails;
+            } catch (e) {
+                console.error(e);
+                this.loading = false;
+            }
+        },
+        async updateDocumentGroup (id: string, data: Partial<DocumentGroup>, onSuccess?: () => void) {
+            try {
+                this.loading = true;
+
+                const res = await updateDocumentGroup(id, data);
+
+                this.loading = false;
+
+                this.documentGroupDetails = { ...res.data.data.attributes, id: res.data.data.id }
+
+                if (onSuccess) {
+                    onSuccess();
+                }
 
                 return this.documentGroupDetails;
             } catch (e) {

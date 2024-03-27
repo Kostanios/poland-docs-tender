@@ -42,6 +42,11 @@
       "relation": "manyToMany",
       "target": "api::document-list.document-list",
       "mappedBy": "document_names"
+    },
+    "document_group": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::document-group.document-group"
     }
   }
 }

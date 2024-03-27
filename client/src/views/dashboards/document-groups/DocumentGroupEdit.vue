@@ -12,7 +12,7 @@ const breadcrumbs = ref([
     {
         text: "Список Групп Документов",
         disabled: false,
-        href: "/document-groups",
+        href: "/document-group",
     },
     {
         text: "Редактирование Группы Документов",

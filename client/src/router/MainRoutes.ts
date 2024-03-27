@@ -12,12 +12,12 @@ const MainRoutes = {
         },
         {
             name: 'DocumentGroups',
-            path: '/document-groups',
+            path: '/document-group',
             component: () => import('@/views/dashboards/document-groups/DocumentGroups.vue'),
         },
         {
             name: 'DocumentGroupsEdit',
-            path: '/document-groups/:id',
+            path: '/document-group/:id',
             component: () => import('@/views/dashboards/document-groups/DocumentGroupEdit.vue'),
         },
         {
