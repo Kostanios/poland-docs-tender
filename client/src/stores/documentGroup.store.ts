@@ -48,7 +48,7 @@ export const useDocumentGroupStore = defineStore({
                 this.loading = false;
             }
         },
-        async updateDocumentGroup (id: string, data: Partial<DocumentGroup>, onSuccess?: () => void) {
+        async updateDocumentGroup (id: string, data: Partial<DocumentGroup>, onSuccess?: () => void, onError?: (message: Error) => void) {
             try {
                 this.loading = true;
 
@@ -65,6 +65,9 @@ export const useDocumentGroupStore = defineStore({
                 return this.documentGroupDetails;
             } catch (e) {
                 console.error(e);
+                if (onError) {
+                    onError(e as Error);
+                }
                 this.loading = false;
             }
         },
