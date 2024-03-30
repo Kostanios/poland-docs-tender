@@ -12,12 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "document_list": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::document-list.document-list",
-      "inversedBy": "document_file_lists"
-    },
     "uploadedAt": {
       "type": "datetime"
     }

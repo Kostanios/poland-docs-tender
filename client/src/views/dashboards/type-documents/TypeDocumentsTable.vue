@@ -5,7 +5,7 @@ import UiParentCard from '@/components/shared/UiParentCard.vue';
 import { useTypeDocumentsStore } from '@/stores/typeDocuments.store';
 import { router } from '@/router';
 import TypeDocumentsFilters from '@/views/dashboards/type-documents/TypeDocumentsFilters.vue';
-import { useNotificationStore } from '@/stores/notofication.store';
+import { useNotificationStore } from '@/stores/notification.store';
 import { TypeDocumentsConfig } from '@/views/dashboards/type-documents/constants';
 
 const typeModelStore = useTypeDocumentsStore();

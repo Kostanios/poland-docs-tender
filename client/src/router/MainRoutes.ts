@@ -11,6 +11,16 @@ const MainRoutes = {
             redirect: '/type-document',
         },
         {
+            name: 'DocumentGroups',
+            path: '/document-group',
+            component: () => import('@/views/dashboards/document-groups/DocumentGroups.vue'),
+        },
+        {
+            name: 'DocumentGroupsEdit',
+            path: '/document-group/:id',
+            component: () => import('@/views/dashboards/document-groups/DocumentGroupEdit.vue'),
+        },
+        {
             name: 'DocumentNames',
             path: '/document-name',
             component: () => import('@/views/dashboards/document-names/DocumentNames.vue'),
@@ -18,12 +28,12 @@ const MainRoutes = {
         {
             name: 'DocumentNamesCreate',
             path: '/document-name-create',
-            component: () => import('@/views/dashboards/document-names/CreateDocumentName.vue'),
+            component: () => import('@/views/dashboards/document-names/DocumentNameCreate.vue'),
         },
         {
             name: 'DocumentNameEdit',
             path: '/document-name/:id',
-            component: () => import('@/views/dashboards/document-names/EditDocumentName.vue'),
+            component: () => import('@/views/dashboards/document-names/DocumentNameEdit.vue'),
         },
         {
             name: 'TypeDocument',

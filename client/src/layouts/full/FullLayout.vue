@@ -5,7 +5,7 @@ import Customizer from './customizer/Customizer.vue';
 import VerticalSidebarVue from './vertical-sidebar/VerticalSidebar.vue';
 import { useCustomizerStore } from '../../stores/customizer';
 import { storeToRefs } from 'pinia';
-import { useNotificationStore } from '@/stores/notofication.store';
+import { useNotificationStore } from '@/stores/notification.store';
 const customizer = useCustomizerStore();
 const notifications = useNotificationStore()
 

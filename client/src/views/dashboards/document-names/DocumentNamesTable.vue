@@ -3,7 +3,7 @@ import { storeToRefs } from "pinia";
 import { nextTick, ref, watch } from 'vue';
 import UiParentCard from '@/components/shared/UiParentCard.vue';
 import { router } from '@/router';
-import { useNotificationStore } from '@/stores/notofication.store';
+import { useNotificationStore } from '@/stores/notification.store';
 import { useDocumentNameStore } from '@/stores/documentName.store';
 import { columnsConfig } from '@/views/dashboards/document-names/constants';
 import { getFileTypeLabel } from '@/views/dashboards/document-names/helper';

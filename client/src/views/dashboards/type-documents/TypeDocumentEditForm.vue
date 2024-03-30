@@ -7,7 +7,7 @@ import debounce from '@/utils/debounce';
 import { useDocumentNameStore } from '@/stores/documentName.store';
 import { router } from '@/router';
 import type { DocumentNameEntity } from '@/types/dto/documentName';
-import { useNotificationStore } from '@/stores/notofication.store';
+import { useNotificationStore } from '@/stores/notification.store';
 
 const route = useRoute();
 const id = route.params.id;

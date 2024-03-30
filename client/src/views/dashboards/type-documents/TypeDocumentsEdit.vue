@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiParentCard from '@/components/shared/UiParentCard.vue';
 import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
-import EditTypeDocumentForm from '@/views/dashboards/type-documents/EditTypeDocumentForm.vue';
+import EditTypeDocumentForm from '@/views/dashboards/type-documents/TypeDocumentEditForm.vue';
 import { ref } from 'vue';
 
 const breadcrumbs = ref([
