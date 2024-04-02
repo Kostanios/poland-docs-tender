@@ -426,6 +426,7 @@ export interface ApiDocumentListDocumentList extends Schema.CollectionType {
       'oneToMany',
       'api::document-file-list.document-file-list'
     >;
+    name: Attribute.String & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

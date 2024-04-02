@@ -29,6 +29,10 @@
       "relation": "oneToMany",
       "target": "api::document-file-list.document-file-list",
       "mappedBy": "document_list"
+    },
+    "name": {
+      "type": "string",
+      "required": true
     }
   }
 }

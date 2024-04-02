@@ -2,7 +2,6 @@
 import UiParentCard from '@/components/shared/UiParentCard.vue';
 import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
 import { ref } from 'vue';
-import EditDocumentNameForm from '@/views/dashboards/document-names/EditDocumentNameForm.vue';
 
 const breadcrumbs = ref([
     {
@@ -10,12 +9,12 @@ const breadcrumbs = ref([
         disabled: true,
     },
     {
-        text: "Список Наименований Документов",
+        text: "Список Документов",
         disabled: false,
-        href: "/document-name",
+        href: "/document",
     },
     {
-        text: "Редактирование Наименования Документа",
+        text: "Создание Документа",
         disabled: true,
     },
 ]);
@@ -23,7 +22,6 @@ const breadcrumbs = ref([
 
 <template>
     <BaseBreadcrumb :breadcrumbs="breadcrumbs"/>
-    <UiParentCard title="Редактирование Наименования Документа">
-        <EditDocumentNameForm/>
+    <UiParentCard title="Создание Документа">
     </UiParentCard>
 </template>
