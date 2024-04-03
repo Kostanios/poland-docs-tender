@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useTypeDocumentsStore } from '@/stores/typeDocuments.store';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useDocumentNameStore } from '@/stores/documentName.store';
 import { router } from '@/router';
-import { type DocumentNameEntity, DocumentNameInputType } from '@/types/dto/documentName';
+import { type DocumentNameEntity } from '@/types/dto/documentName';
 import { useNotificationStore } from '@/stores/notofication.store';
-import type { TypicalDocumentEntity } from '@/types/dto/typicalDocument';
 import { useDocumentStore } from '@/stores/document.store';
+import { useUserStore } from '@/stores/users.store';
+import type { UserEntity } from '@/types/dto/user';
 
 const route = useRoute();
 const id = route.params.id;
@@ -16,14 +16,15 @@ const form = ref()
 const notifications = useNotificationStore();
 const documentNameStore = useDocumentNameStore();
 const documentStore = useDocumentStore();
-const { documentNameDetails } = storeToRefs(documentNameStore);
+const userStore = useUserStore();
+const { documentDetails } = storeToRefs(documentStore);
 
 const documentNames = ref<DocumentNameEntity[]>([]);
 const name = ref<string | null>(null);
 const selectValue = ref<string[] | null>(null);
-const description = ref<string | null>(null);
-const selectedTypicalDocuments = ref<string[] | null>(null);
-const typicalDocuments = ref<TypicalDocumentEntity[]>([]);
+const users = ref<UserEntity[]>([]);
+const userSelectValue = ref<string[] | null>(null);
+const usersLabels = ref<Object[]>([]);
 const documentNamesLabels = ref<Object[]>([]);
 
 const nameRules = ref([
@@ -36,9 +37,10 @@ const documentNamesRules = ref([
     (v: string) => (v && v.length >= 1) || 'Типовой документ должен иметь минимум 1 связанное Наименование Документа',
 ]);
 
-const updateDocumentName = documentNameStore.updateDocumentName;
+const updateDocument = documentStore.updateDocument;
 const getDocument = documentStore.getDocument;
 const getDocumentNamesPage = documentNameStore.getDocumentNamesPage;
+const getUsers = userStore.getUsers;
 
 onMounted(() => {
     if (typeof id === 'string') {
@@ -57,32 +59,34 @@ onMounted(() => {
                 selectValue.value = data.filter(documentName => documentName?.document_lists?.data?.find(typicalDocument => typicalDocument.id === Number(id))).map(documentName => documentName.name);
             });
 
-        // getTypeDocuments({ populate: 'document_names' })
-        //     .then((data) => {
-        //         typicalDocuments.value = data;
-        //         typicalDocumentsLabels.value = data.map(documentName => ({
-        //             ...documentName,
-        //             title: documentName.name
-        //         }));
+        getUsers({ populate: 'document_lists' })
+            .then((data) => {
+                users.value = data;
+                usersLabels.value = data.map(user => ({
+                    ...user,
+                    title: user.email
+                }));
 
-        //         selectedTypicalDocuments.value = data
-        //             .filter(typicalDocument => typicalDocument.document_names?.data?.find(documentName => documentName.id === Number(id)))
-        //             .map(typicalDocument => typicalDocument.name);
-        //     });
+                userSelectValue.value = data
+                    .filter(user => {
+                        return user?.document_lists?.find(documentList => documentList.id === Number(id));
+                    })
+                    .map(user => user.email);
+            });
     }
 
 });
 
 function editTypeDocumentHandler () {
-    if (typeof id === 'string' && documentNameDetails.value) {
-        const { createdAt, publishedAt, updatedAt } = documentNameDetails.value;
+    if (typeof id === 'string' && documentDetails.value) {
+        const { createdAt, publishedAt, updatedAt } = documentDetails.value;
         const onSuccess = () => {
             notifications.showNotification(`Документ Успешно Обновлен!`, 'success');
-            router.push('/document-name');
+            router.push('/document');
         };
 
         if (name.value) {
-            updateDocumentName(id, {
+            updateDocument(id, {
                 createdAt,
                 publishedAt,
                 updatedAt,
@@ -124,6 +128,15 @@ async function submit (e: Event) {
                     :rules="documentNamesRules"
                     v-model="selectValue"
                     :items="documentNamesLabels"
+                    color="primary"
+                    variant="outlined"
+                />
+                <v-label class="mb-2 font-weight-medium">Связанные Пользователи</v-label>
+                <v-autocomplete
+                    multiple
+                    chips
+                    v-model="userSelectValue"
+                    :items="usersLabels"
                     color="primary"
                     variant="outlined"
                 />

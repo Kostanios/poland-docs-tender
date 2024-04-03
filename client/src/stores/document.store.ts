@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import { getDocument, createDocument } from '@/services/documentService';
 import type { DocumentEntity, Document } from '@/types/dto/document';
+import type { TypicalDocument } from '@/types/dto/typicalDocument';
+import { updateTypeDocument } from '@/services/typeDocumentsService';
 
 interface DocumentStore {
     documents: DocumentEntity[],
@@ -43,6 +45,27 @@ export const useDocumentStore = defineStore({
                 if (onSuccess) {
                     onSuccess();
                 }
+            } catch (e) {
+                console.error(e);
+                this.loading = false;
+                return this.documentDetails;
+            }
+        },
+        async updateDocument (id: string, data: Partial<Document>, onSuccess?: () => void) {
+            try {
+                this.loading = true;
+
+                const res = await updateTypeDocument(id, data);
+
+                this.loading = false;
+
+                this.documentDetails = { ...res.data.data.attributes, id: res.data.data.id }
+
+                if (onSuccess) {
+                    onSuccess();
+                }
+
+                return this.documentDetails;
             } catch (e) {
                 console.error(e);
                 this.loading = false;
