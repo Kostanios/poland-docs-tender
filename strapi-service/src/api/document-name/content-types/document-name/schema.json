@@ -41,7 +41,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::document-list.document-list",
-      "inversedBy": "document_names"
+      "mappedBy": "document_names"
     }
   }
 }

@@ -32,7 +32,7 @@ interface DocumentNameStore {
                 $eq: string | null
             }
         },
-        populate?: 'typical_documents',
+        populate?: 'typical_documents' | 'document_lists',
     },
     loading: boolean
 }
@@ -89,7 +89,7 @@ export const useDocumentNameStore = defineStore({
         },
         async getDocumentNamesPage (params?: Partial<GetTableParams & {
             typicalDocumentsId?: string,
-            populate?: 'typical_documents',
+            populate?: 'typical_documents' | 'document_lists',
             filters: {
                 name?: string,
                 inputType?: DocumentNameInputType

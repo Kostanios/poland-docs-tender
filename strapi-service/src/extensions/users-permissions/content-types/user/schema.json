@@ -92,7 +92,7 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::document-list.document-list",
-      "mappedBy": "users_permissions_user"
+      "mappedBy": "user"
     }
   }
 }

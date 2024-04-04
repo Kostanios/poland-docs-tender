@@ -1,5 +1,5 @@
-import type { TypicalDocument, TypicalDocumentDTO } from '@/types/dto/typicalDocument';
-import type { StrapiContentDTO } from '@/types/strapi';
+import type { TypicalDocumentDTO } from '@/types/dto/typicalDocument';
+import type { DocumentEntity } from '@/types/dto/document';
 
 export type DocumentName = {
     createdAt: string
@@ -34,6 +34,9 @@ export type DocumentNameEntity = {
     publishedAt: string
     updatedAt: string
     typical_documents?: {
-        data?:  TypicalDocumentDTO[]
+        data?: TypicalDocumentDTO[]
+    }
+    document_lists?: {
+        data?: DocumentEntity[]
     }
 }
