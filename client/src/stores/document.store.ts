@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getDocument, createDocument } from '@/services/documentService';
+import { getDocument, createDocument, updateDocument } from '@/services/documentService';
 import type { DocumentEntity, Document } from '@/types/dto/document';
 import type { TypicalDocument } from '@/types/dto/typicalDocument';
 import { updateTypeDocument } from '@/services/typeDocumentsService';
@@ -51,11 +51,11 @@ export const useDocumentStore = defineStore({
                 return this.documentDetails;
             }
         },
-        async updateDocument (id: string, data: Partial<Document>, onSuccess?: () => void) {
+        async updateDocument (id: string, data: Partial<Document & { document_names: { set: number [] }, user: number}>, onSuccess?: () => void) {
             try {
                 this.loading = true;
 
-                const res = await updateTypeDocument(id, data);
+                const res = await updateDocument(id, data);
 
                 this.loading = false;
 

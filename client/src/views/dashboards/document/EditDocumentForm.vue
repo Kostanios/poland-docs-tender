@@ -21,9 +21,9 @@ const { documentDetails } = storeToRefs(documentStore);
 
 const documentNames = ref<DocumentNameEntity[]>([]);
 const name = ref<string | null>(null);
-const selectValue = ref<string[] | null>(null);
+const documentNameSelectValue = ref<string[] | null>(null);
 const users = ref<UserEntity[]>([]);
-const userSelectValue = ref<string[] | null>(null);
+const userSelectValue = ref<string | null>(null);
 const usersLabels = ref<Object[]>([]);
 const documentNamesLabels = ref<Object[]>([]);
 
@@ -56,7 +56,7 @@ onMounted(() => {
                     ...documentName,
                     title: documentName.name
                 }));
-                selectValue.value = data.filter(documentName => documentName?.document_lists?.data?.find(typicalDocument => typicalDocument.id === Number(id))).map(documentName => documentName.name);
+                documentNameSelectValue.value = data.filter(documentName => documentName?.document_lists?.data?.find(typicalDocument => typicalDocument.id === Number(id))).map(documentName => documentName.name);
             });
 
         getUsers({ populate: 'document_lists' })
@@ -68,10 +68,9 @@ onMounted(() => {
                 }));
 
                 userSelectValue.value = data
-                    .filter(user => {
+                    .find(user => {
                         return user?.document_lists?.find(documentList => documentList.id === Number(id));
-                    })
-                    .map(user => user.email);
+                    })?.email || null
             });
     }
 
@@ -80,6 +79,11 @@ onMounted(() => {
 function editTypeDocumentHandler () {
     if (typeof id === 'string' && documentDetails.value) {
         const { createdAt, publishedAt, updatedAt } = documentDetails.value;
+        const documentNamesIdsToSet = documentNameSelectValue.value?.map(documentName =>
+            documentNames.value
+                .find(documentNameObj => documentNameObj.name === documentName)?.id
+        );
+
         const onSuccess = () => {
             notifications.showNotification(`Документ Успешно Обновлен!`, 'success');
             router.push('/document');
@@ -91,6 +95,10 @@ function editTypeDocumentHandler () {
                 publishedAt,
                 updatedAt,
                 name: name.value,
+                document_names: {
+                    set: documentNamesIdsToSet as number[]
+                },
+                user: users.value.find(userObj => userObj.email === userSelectValue.value)?.id as number
             }, onSuccess)
         }
     }
@@ -126,15 +134,13 @@ async function submit (e: Event) {
                     multiple
                     chips
                     :rules="documentNamesRules"
-                    v-model="selectValue"
+                    v-model="documentNameSelectValue"
                     :items="documentNamesLabels"
                     color="primary"
                     variant="outlined"
                 />
-                <v-label class="mb-2 font-weight-medium">Связанные Пользователи</v-label>
+                <v-label class="mb-2 font-weight-medium">Связанный Пользователь</v-label>
                 <v-autocomplete
-                    multiple
-                    chips
                     v-model="userSelectValue"
                     :items="usersLabels"
                     color="primary"
