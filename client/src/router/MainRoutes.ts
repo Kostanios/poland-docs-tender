@@ -44,6 +44,11 @@ const MainRoutes = {
             name: 'DocumentEdit',
             path: '/document/:id',
             component: () => import('@/views/dashboards/document/EditDocument.vue'),
+        },
+        {
+            name: 'DocumentCreate',
+            path: '/document-create',
+            component: () => import('@/views/dashboards/document/CreateDocument.vue'),
         }
     ]
 };

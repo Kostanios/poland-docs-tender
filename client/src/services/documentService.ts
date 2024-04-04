@@ -2,7 +2,7 @@ import axiosServices from '@/utils/axios';
 import type { StrapiContentDTO } from '@/types/strapi';
 import type { DocumentDTO, Document } from '@/types/dto/document';
 
-export const createDocument = (data: Document) =>
+export const createDocument = (data: Document & { document_names: { set: number[] }, user: number }) =>
     axiosServices.post<StrapiContentDTO<DocumentDTO>>('/api/document-lists', { data });
 
 export const getDocument = (id: string) =>

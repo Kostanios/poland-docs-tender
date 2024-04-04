@@ -34,7 +34,7 @@ export const useDocumentStore = defineStore({
         loading: false
     }),
     actions: {
-        async createDocument (data: Document, onSuccess?: () => void) {
+        async createDocument (data: Document & { document_names: { set: number[] }, user: number }, onSuccess?: () => void) {
             try {
                 this.loading = true;
 

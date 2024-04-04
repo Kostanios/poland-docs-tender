@@ -2,6 +2,7 @@
 import UiParentCard from '@/components/shared/UiParentCard.vue';
 import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
 import { ref } from 'vue';
+import CreateDocumentForm from '@/views/dashboards/document/CreateDocumentForm.vue';
 
 const breadcrumbs = ref([
     {
@@ -23,5 +24,6 @@ const breadcrumbs = ref([
 <template>
     <BaseBreadcrumb :breadcrumbs="breadcrumbs"/>
     <UiParentCard title="Создание Документа">
+        <CreateDocumentForm/>
     </UiParentCard>
 </template>
